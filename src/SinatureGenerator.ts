@@ -1,7 +1,8 @@
 import {createHmac} from 'crypto';
+import md5 from 'md5';
 import {Params} from "./types";
 
-export const SignatureBuilder = (params: Params, secret_key: string) => {
+export const SignatureApiBuilder = (params: Params, secret_key: string) => {
     let	paramsString: string = Object.entries(params)
         .sort()
         .reduce((paramsAsString, [key, value]) => {
@@ -10,4 +11,8 @@ export const SignatureBuilder = (params: Params, secret_key: string) => {
         }, '')
 
     return createHmac('sha1', secret_key).update(paramsString).digest('hex');
+}
+
+export const SignatureWebSocketsBuilder = (shop_id: number, secret_key: string) => {
+    return md5(shop_id+secret_key);
 }

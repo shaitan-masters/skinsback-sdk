@@ -1,5 +1,5 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {SignatureBuilder} from './SinatureGenerator'
+import {SignatureApiBuilder} from './SinatureGenerator'
 import {
     API_METHODS,
     GameTypes,
@@ -34,7 +34,7 @@ class API {
                 ...config.data,
                 shopid: apiConfig.shop_id,
             }
-            data.sign = SignatureBuilder(data, apiConfig.secret_key)
+            data.sign = SignatureApiBuilder(data, apiConfig.secret_key)
             config.data = data
 
             // Return modified config with shop_id and signature
