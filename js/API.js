@@ -64,7 +64,7 @@ class API {
                 ...config.data,
                 shopid: apiConfig.shop_id,
             };
-            data.sign = SinatureGenerator_1.SignatureBuilder(data, apiConfig.secret_key);
+            data.sign = SinatureGenerator_1.SignatureApiBuilder(data, apiConfig.secret_key);
             config.data = data;
             // Return modified config with shop_id and signature
             return config;

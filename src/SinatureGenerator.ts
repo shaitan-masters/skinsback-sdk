@@ -13,6 +13,6 @@ export const SignatureApiBuilder = (params: Params, secret_key: string) => {
     return createHmac('sha1', secret_key).update(paramsString).digest('hex');
 }
 
-export const SignatureWebSocketsBuilder = (shop_id: number, secret_key: string) => {
+export const SignatureWebSocketsBuilder = (shop_id: string | number, secret_key: string) => {
     return md5(shop_id+secret_key);
 }

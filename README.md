@@ -5,12 +5,11 @@
 
 ##Usage
 ```javascript
-const SkinsBackAPI = require('skinsback-sdk');
-const api = new SkinsBackAPI(options);
+const API = require('skinsback-sdk').API;
 ```
 or
 ```javascript
-import SkinsBackAPI from 'skinsback-sdk';
+import {API} from 'skinsback-sdk';
 ````
 ##Contructor options
 
@@ -20,14 +19,14 @@ import SkinsBackAPI from 'skinsback-sdk';
 
 ####Example
 ```javascript
-import SkinsBackAPI from 'skinsback-sdk';
+import {API} from 'skinsback-sdk';
 
 const options = {
     shop_id: 1490,
     secret_key: 'XCvlP45Y2dH2UmHhkl1'
 }
 
-const api = new SkinsBackAPI(options);
+const api = new API(options);
 ```
 
 ## Api methods
@@ -111,4 +110,48 @@ const params = {
     ending: 15125832   /// Unix time конца
 }
 api.getBoughtItemsHistory(params) 
+```
+
+## WebScokets
+Получение real-time изменений по приобретенным скинами.
+
+##Usage
+```javascript
+const WebSockets = require('skinsback-sdk').WebSockets;
+```
+or
+```javascript
+import {WebSockets} from 'skinsback-sdk';
+````
+##Contructor options
+
+- `options[shop_id]`: your shop_id key **required**
+- `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=market_websocket).
+
+####Example
+```javascript
+import {WebSockets} from 'skinsback-sdk';
+
+const options = {
+    shop_id: 1490,
+    secret_key: 'XCvlP45Y2dH2UmHhkl1'
+}
+
+const sockets = new WebSockets(options);
+```
+## WebSockets methods
+* [Подписка на события сокетов](https://skinsback.com/profile.php?act=api&item=market_websocket)
+(Данные приходящие по сокетам попадают в аргумент callback функции уже в виде распаршенного объекта)
+```javascript
+sockets.subscribe(data => console.log(data));
+```
+* Вызов callback функции при подключении к сокетам 
+```javascript
+const cb = () => console.log('Connected')
+sockets.connect(cb) 
+```
+* Вызов callback функции при отключении от сокетов 
+```javascript
+const cb = () => console.log('Disconnected')
+sockets.disconnect(cb)
 ```

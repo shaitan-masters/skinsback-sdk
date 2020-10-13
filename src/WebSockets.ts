@@ -1,14 +1,35 @@
 import WS from 'ws';
-import {WebSocketConfig} from './types';
+import {SignatureWebSocketsBuilder} from './SinatureGenerator';
+import {
+    SocketData,
+    SubscribeCallback,
+    WebSocketConfig
+} from './types';
 
+
+const getConnectedURL = ({shop_id, secret_key}: WebSocketConfig) => {
+    const signature = SignatureWebSocketsBuilder(shop_id, secret_key);
+    return `ws://185.71.65.202:7777/?shopid=${shop_id}&signature=${signature}`
+};
 
 class WebSockets extends WS {
     constructor(config: WebSocketConfig) {
-        super(`ws://185.71.65.202:7777/?shopid=${config.shop_id}&signature=${config.secret_key}`);
+        super(getConnectedURL(config));
     }
 
-    public subscribe = (cb: (data: any) => void) => {
-        this.onmessage = cb;
+    public subscribe = (cb: SubscribeCallback): void => {
+        this.onmessage = event => {
+            const data: SocketData = JSON.parse(event.data as string);
+            cb(data);
+        }
+    }
+
+    public connect = (cb: () => void): void => {
+        this.onopen = cb;
+    }
+
+    public disconnect = (cb: () => void): void => {
+        this.onclose = cb;
     }
 }
 
