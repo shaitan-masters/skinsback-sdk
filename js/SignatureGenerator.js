@@ -1,8 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignatureBuilder = void 0;
+exports.SignatureWebSocketsBuilder = exports.SignatureApiBuilder = void 0;
 const crypto_1 = require("crypto");
-exports.SignatureBuilder = (params, secret_key) => {
+const md5_1 = __importDefault(require("md5"));
+exports.SignatureApiBuilder = (params, secret_key) => {
     let paramsString = Object.entries(params)
         .sort()
         .reduce((paramsAsString, [key, value]) => {
@@ -11,4 +15,7 @@ exports.SignatureBuilder = (params, secret_key) => {
         return paramsAsString + key + ':' + value + ';';
     }, '');
     return crypto_1.createHmac('sha1', secret_key).update(paramsString).digest('hex');
+};
+exports.SignatureWebSocketsBuilder = (shop_id, secret_key) => {
+    return md5_1.default(shop_id + secret_key);
 };
