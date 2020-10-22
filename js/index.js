@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebSockets = exports.Api = void 0;
+exports.WebSockets = exports.API = void 0;
 const API_1 = __importDefault(require("./API"));
 const WebSockets_1 = __importDefault(require("./WebSockets"));
 __exportStar(require("./types"), exports);
-exports.Api = API_1.default;
+exports.API = API_1.default;
 exports.WebSockets = WebSockets_1.default;
