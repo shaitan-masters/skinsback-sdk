@@ -1,6 +1,6 @@
 {
   "name": "skinsback-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "skinsback.com API",
   "main": "js/index.js",
   "types": "src/index.ts",
