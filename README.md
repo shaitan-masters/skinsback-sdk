@@ -5,12 +5,11 @@
 
 ##Usage
 ```javascript
-const SkinsBackAPI = require('skinsback-sdk');
-const api = new SkinsBackAPI(options);
+const API = require('skinsback-api').API;
 ```
 or
 ```javascript
-import SkinsBackAPI from 'skinsback-sdk';
+import {API} from 'skinsback-api';
 ````
 ##Contructor options
 
@@ -20,95 +19,139 @@ import SkinsBackAPI from 'skinsback-sdk';
 
 ####Example
 ```javascript
-import SkinsBackAPI from 'skinsback-sdk';
+import {API} from 'skinsback-api';
 
 const options = {
     shop_id: 1490,
     secret_key: 'XCvlP45Y2dH2UmHhkl1'
 }
 
-const api = new SkinsBackAPI(options);
+const api = new API(options);
 ```
 
 ## Api methods
 All methods of api return a Promise.
-* [Проверка баланса на сайте](https://skinsback.com/profile.php?act=api&item=balance) 
+* [Check the balance on the site](https://skinsback.com/profile.php?act=api&item=balance) 
 ```javascript
 api.getBalance() 
 ```
-* [Получени5е валют и курсов](https://skinsback.com/profile.php?act=api&item=currencies) 
+* [Get currencies and rates](https://skinsback.com/profile.php?act=api&item=currencies) 
 ```javascript
 api.getCurrencies() 
 ```
-* [Получение списка депозитов](https://skinsback.com/profile.php?act=api&item=orders) 
+* [Get orders list](https://skinsback.com/profile.php?act=api&item=orders) 
 ```javascript
 const params = {
-    starting: 15123132, /// Unix time начала
-    ending: 15125832   /// Unix time конца
+    starting: 15123132, /// Unix time starting
+    ending: 15125832   /// Unix time ending
 }
 api.getOrders(params) 
 ```
-* [Проверка статуса заказа по ID транзакции](https://skinsback.com/profile.php?act=api&item=orderstatus) 
+* [Check order status by Transaction Id](https://skinsback.com/profile.php?act=api&item=orderstatus) 
 ```javascript
 const transaction_id = 65236
 api.getOrderStatusByTransactionId(transaction_id) 
 ```
-* [Проверка статуса заказа по ID заказа](https://skinsback.com/profile.php?act=api&item=orderstatus) 
+* [Check order status by Order Id](https://skinsback.com/profile.php?act=api&item=orderstatus) 
 ```javascript
 const order_id = 636
 api.getOrderStatusByOrderId(order_id) 
 ```
-* [Создание заказа](https://skinsback.com/profile.php?act=api&item=createorder) 
+* [Create order](https://skinsback.com/profile.php?act=api&item=createorder) 
 ```javascript
 const order_id = 636 ///Уникальный ID заказа в вашей системе
 api.createOrder(order_id) 
 ```
-* [Статус сервера](https://skinsback.com/profile.php?act=api&item=status) 
+* [Get server status](https://skinsback.com/profile.php?act=api&item=status) 
 ```javascript
 api.serverStatus() 
 ```
-* [Получение списка недошедших Callback](https://skinsback.com/profile.php?act=api&item=callback_errors) 
+* [Get error callbacks list](https://skinsback.com/profile.php?act=api&item=callback_errors) 
 ```javascript
 api.getErrorCallbackList() 
 ```
-* [МАРКЕТ: Прайслист (Наличие скинов)](https://skinsback.com/profile.php?act=api&item=market_pricelist) 
+* [MARKET: Price list (Skins availability)](https://skinsback.com/profile.php?act=api&item=market_pricelist) 
 ```javascript
 const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
 api.getMarketPriceList([game]) 
 ```
-* [МАРКЕТ: Поиск скинов по названию](https://skinsback.com/profile.php?act=api&item=market_search) 
+* [MARKET: Search skins by name](https://skinsback.com/profile.php?act=api&item=market_search) 
 ```javascript
 const name = 'FAMAS' // name of skin
 const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
 api.getMarketPriceList(name, [game]) 
 ```
-* [МАРКЕТ: Покупка скина по имени вещи и отправка юзеру](https://skinsback.com/profile.php?act=api&item=market_buy) 
+* [MARKET: Buy skin by skin name and send to user](https://skinsback.com/profile.php?act=api&item=market_buy) 
 ```javascript
 const name = 'FAMAS' // name of skin
 const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
 api.buyItemByNameAndSendToUser(name, [game]) 
 ```
-* [МАРКЕТ: Покупка скина по ID вещи и отправка юзеру](https://skinsback.com/profile.php?act=api&item=market_buy) 
+* [MARKET: Buy skin by skin Id and send to user](https://skinsback.com/profile.php?act=api&item=market_buy) 
 ```javascript
 const params = {
-    partner: string, // Значение partner из Trade URL пользователя
-    token: string, // Значение token из Trade URL пользователя
-    max_price: number, // Максимальная стоимость скина для покупки (в USD). Используется как ограничитель стоимости.
-    name: string, // Название скина (market hash name)
+    partner: string, // partner value from user trade URL
+    token: string, //   token value from user trade URL
+    max_price: number, // max skin cost for buying (as USD). Used as a cost limiter.
+    name: string, // Skin name (market hash name)
     game: string // Game types 'dota2' or 'csgo'. Default: 'csgo'
 }
 api.buyItemByIdAndSendToUser(params) 
 ```
-* [МАРКЕТ: ИНФОРМАЦИЯ О ПОКУПКЕ](https://skinsback.com/profile.php?act=api&item=market_getinfo) 
+* [MARKET: Get purchase information](https://skinsback.com/profile.php?act=api&item=market_getinfo) 
 ```javascript
-const buy_id = 12354322 /// buy_id из метода buyItemByIdAndSendToUser или buyItemByNameAndSendToUser
+const buy_id = 12354322 /// buy_id from method buyItemByIdAndSendToUser or buyItemByNameAndSendToUser
 api.getInfoAboutBoughtItem(buy_id) 
 ```
-* [МАРКЕТ: История покупок](https://skinsback.com/profile.php?act=api&item=market_history) 
+* [MARKET: Purchase history](https://skinsback.com/profile.php?act=api&item=market_history) 
 ```javascript
 const params = {
-    starting: 15123132, /// Unix time начала
-    ending: 15125832   /// Unix time конца
+    starting: 15123132, /// Unix time starting
+    ending: 15125832   /// Unix time ending
 }
 api.getBoughtItemsHistory(params) 
+```
+
+## WebScokets
+Getting real-time changes for purchased skins.
+
+##Usage
+```javascript
+const WebSockets = require('skinsback-api').WebSockets;
+```
+or
+```javascript
+import {WebSockets} from 'skinsback-api';
+````
+##Contructor options
+
+- `options[shop_id]`: your shop_id key **required**
+- `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=market_websocket).
+
+####Example
+```javascript
+import {WebSockets} from 'skinsback-api';
+
+const options = {
+    shop_id: 1490,
+    secret_key: 'XCvlP45Y2dH2UmHhkl1'
+}
+
+const sockets = new WebSockets(options);
+```
+## WebSockets methods
+* [Subscribing to socket events](https://skinsback.com/profile.php?act=api&item=market_websocket)
+(Data arriving via sockets goes into the callback function argument as a parsed object)
+```javascript
+sockets.subscribe(data => console.log(data));
+```
+* Calling a callback function when connecting to sockets
+```javascript
+const cb = () => console.log('Connected')
+sockets.connect(cb) 
+```
+* Calling a callback function when disconnecting from sockets 
+```javascript
+const cb = () => console.log('Disconnected')
+sockets.disconnect(cb)
 ```
