@@ -1,5 +1,5 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {SignatureApiBuilder} from './SinatureGenerator'
+import {SignatureApiBuilder} from './SignatureGenerator'
 import {
     API_METHODS,
     GameTypes,

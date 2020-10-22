@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = __importDefault(require("ws"));
-const SinatureGenerator_1 = require("./SinatureGenerator");
+const SignatureGenerator_1 = require("./SignatureGenerator");
 const getConnectedURL = ({ shop_id, secret_key }) => {
-    const signature = SinatureGenerator_1.SignatureWebSocketsBuilder(shop_id, secret_key);
+    const signature = SignatureGenerator_1.SignatureWebSocketsBuilder(shop_id, secret_key);
     return `ws://185.71.65.202:7777/?shopid=${shop_id}&signature=${signature}`;
 };
 class WebSockets extends ws_1.default {

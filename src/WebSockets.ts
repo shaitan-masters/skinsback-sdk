@@ -1,5 +1,5 @@
 import WS from 'ws';
-import {SignatureWebSocketsBuilder} from './SinatureGenerator';
+import {SignatureWebSocketsBuilder} from './SignatureGenerator';
 import {
     SocketData,
     SubscribeCallback,

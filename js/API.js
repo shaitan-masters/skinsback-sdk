@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
-const SinatureGenerator_1 = require("./SinatureGenerator");
+const SignatureGenerator_1 = require("./SignatureGenerator");
 const types_1 = require("./types");
 class API {
     constructor(apiConfig) {
@@ -64,7 +64,7 @@ class API {
                 ...config.data,
                 shopid: apiConfig.shop_id,
             };
-            data.sign = SinatureGenerator_1.SignatureApiBuilder(data, apiConfig.secret_key);
+            data.sign = SignatureGenerator_1.SignatureApiBuilder(data, apiConfig.secret_key);
             config.data = data;
             // Return modified config with shop_id and signature
             return config;
