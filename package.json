@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "publish": "npm build & npm publish",
+    "publish": "npm run build & npm publish",
     "dev": "nodemon --exec ts-node -- ./src/index.ts"
   },
   "repository": {
