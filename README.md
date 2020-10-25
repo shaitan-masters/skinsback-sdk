@@ -5,11 +5,11 @@
 
 ## Usage
 ```javascript
-const API = require('skinsback-api').API;
+const API = require('skinsback-sdk').API;
 ```
 or
 ```javascript
-import {API} from 'skinsback-api';
+import {API} from 'skinsback-sdk';
 ````
 ## Constructor options
 
@@ -19,11 +19,11 @@ import {API} from 'skinsback-api';
 
 #### Example
 ```javascript
-import {API} from 'skinsback-api';
+import {API} from 'skinsback-sdk';
 
 const options = {
     shop_id: 1490,
-    secret_key: 'XCvlP45Y2dH2UmHhkl1'
+    secret_key: 'XCvlP45Y2dH2UmHhk'
 }
 
 const api = new API(options);
@@ -117,11 +117,11 @@ Getting real-time changes for purchased skins.
 
 ## Usage
 ```javascript
-const WebSockets = require('skinsback-api').WebSockets;
+const WebSockets = require('skinsback-sdk').WebSockets;
 ```
 or
 ```javascript
-import {WebSockets} from 'skinsback-api';
+import {WebSockets} from 'skinsback-sdk';
 ````
 ## Constructor options
 
@@ -130,7 +130,7 @@ import {WebSockets} from 'skinsback-api';
 
 #### Example
 ```javascript
-import {WebSockets} from 'skinsback-api';
+import {WebSockets} from 'skinsback-sdk';
 
 const options = {
     shop_id: 1490,
