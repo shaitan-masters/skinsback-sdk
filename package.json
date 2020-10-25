@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shaitan-masters/skinsback-api.git"
+    "url": "git+https://github.com/shaitan-masters/skinsback-sdk.git"
   },
   "keywords": [
     "[]"
@@ -19,9 +19,9 @@
   "author": "Danil Naydyonov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shaitan-masters/skinsback-api/issues"
+    "url": "https://github.com/shaitan-masters/skinsback-sdk/issues"
   },
-  "homepage": "https://github.com/shaitan-masters/skinsback-api#readme",
+  "homepage": "https://github.com/shaitan-masters/skinsback-sdk#readme",
   "dependencies": {
     "@types/md5": "^2.2.0",
     "@types/node": "^14.11.5",
