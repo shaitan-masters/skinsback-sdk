@@ -1,9 +1,9 @@
-##Node module for [skinsback.com](https://skinsback.com) API.
+# Node module for [skinsback.com](https://skinsback.com) API.
 ## Installation
 
 `npm install skinsback-sdk`
 
-##Usage
+## Usage
 ```javascript
 const API = require('skinsback-api').API;
 ```
@@ -11,13 +11,13 @@ or
 ```javascript
 import {API} from 'skinsback-api';
 ````
-##Contructor options
+## Constructor options
 
 - `options[shop_id]`: your shop_id key **required**
 - `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=signature).
 - `options[apiUrl]`: url to API. *Default: `https://skinsback.com/api.php`.*
 
-####Example
+#### Example
 ```javascript
 import {API} from 'skinsback-api';
 
@@ -112,10 +112,10 @@ const params = {
 api.getBoughtItemsHistory(params) 
 ```
 
-## WebScokets
+## WebSockets
 Getting real-time changes for purchased skins.
 
-##Usage
+## Usage
 ```javascript
 const WebSockets = require('skinsback-api').WebSockets;
 ```
@@ -123,12 +123,12 @@ or
 ```javascript
 import {WebSockets} from 'skinsback-api';
 ````
-##Contructor options
+## Constructor options
 
 - `options[shop_id]`: your shop_id key **required**
 - `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=market_websocket).
 
-####Example
+#### Example
 ```javascript
 import {WebSockets} from 'skinsback-api';
 
