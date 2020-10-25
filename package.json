@@ -1,6 +1,6 @@
 {
-  "name": "skinsback-api",
-  "version": "1.0.1",
+  "name": "skinsback-sdk",
+  "version": "0.1.0",
   "description": "skinsback.com API",
   "main": "js/index.js",
   "types": "src/index.ts",
@@ -19,7 +19,7 @@
   "author": "Danil Naydyonov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shaitan-masters/skinsback-apiissues"
+    "url": "https://github.com/shaitan-masters/skinsback-api/issues"
   },
   "homepage": "https://github.com/shaitan-masters/skinsback-api#readme",
   "dependencies": {
