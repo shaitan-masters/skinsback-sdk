@@ -1,7 +1,7 @@
 {
   "name": "skinsback-sdk",
   "version": "0.1.0",
-  "description": "skinsback.com API",
+  "description": "SDK for integrations with skinsback.com",
   "main": "js/index.js",
   "types": "src/index.ts",
   "scripts": {
