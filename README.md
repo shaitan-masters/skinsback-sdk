@@ -126,15 +126,16 @@ import {WebSockets} from 'skinsback-api';
 ##Contructor options
 
 - `options[shop_id]`: your shop_id key **required**
-- `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=market_websocket).
-
+- `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=market_websocket) **required**.
+- `options[socket_url]`: SkinsBack socket url **required**. [Show more](https://skinsback.com/profile.php?act=api&item=market_websocket)
 ####Example
 ```javascript
 import {WebSockets} from 'skinsback-api';
 
 const options = {
     shop_id: 1490,
-    secret_key: 'XCvlP45Y2dH2UmHhkl1'
+    secret_key: 'XCvlP45Y2dH2UmHhkl1',
+    socket_url: 'ws://185.71.65.202:7777'
 }
 
 const sockets = new WebSockets(options);
