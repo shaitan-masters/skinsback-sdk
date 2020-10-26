@@ -1,27 +1,27 @@
 {
   "name": "skinsback-api",
-  "version": "0.2.0",
+  "version": "0.0.1",
   "description": "skinsback.com API",
-  "main": "index.js",
+  "main": "js/index.js",
   "types": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "publish": "npm build & npm publish",
+    "publish": "npm run build & npm publish",
     "dev": "nodemon --exec ts-node -- ./src/index.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/malsatin/skinsback-api.git"
+    "url": "git+https://github.com/shaitan-masters/skinsback-sdk.git"
   },
   "keywords": [
-    "[]"
+    "skinsback", "sdk", "api", "skins", "csgo", "dota2"
   ],
   "author": "Danil Naydyonov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/malsatin/skinsback-api/issues"
+    "url": "https://github.com/shaitan-masters/skinsback-sdk/issues"
   },
-  "homepage": "https://github.com/malsatin/skinsback-api#readme",
+  "homepage": "https://github.com/shaitan-masters/skinsback-sdk#readme",
   "dependencies": {
     "@types/md5": "^2.2.0",
     "@types/node": "^14.11.5",
