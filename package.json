@@ -14,7 +14,12 @@
     "url": "git+https://github.com/shaitan-masters/skinsback-sdk.git"
   },
   "keywords": [
-    "skinsback", "sdk", "api", "skins", "csgo", "dota2"
+    "skinsback",
+    "sdk",
+    "api",
+    "skins",
+    "csgo",
+    "dota2"
   ],
   "author": "Danil Naydyonov",
   "license": "ISC",
@@ -23,17 +28,17 @@
   },
   "homepage": "https://github.com/shaitan-masters/skinsback-sdk#readme",
   "dependencies": {
-    "@types/md5": "^2.2.0",
-    "@types/node": "^14.11.5",
-    "@types/ws": "^7.2.7",
-    "axios": "^0.20.0",
+    "@types/md5": "^2.2.1",
+    "@types/node": "^14.14.5",
+    "@types/ws": "^7.2.8",
+    "axios": "^0.21.0",
     "crypto": "^1.0.1",
     "i": "^0.3.6",
     "md5": "^2.3.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.6",
     "npm": "^6.14.8",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.3",
+    "typescript": "^4.0.5",
     "ws": "^7.3.1"
   }
 }
