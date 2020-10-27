@@ -1,5 +1,6 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {SignatureApiBuilder} from './SignatureGenerator'
+import {API_URL} from "./defaultConfig";
 import {
     API_METHODS,
     GameTypes,
@@ -21,7 +22,7 @@ class API {
     constructor(apiConfig: ApiConfig) {
         this.config = apiConfig;
         this.axios = axios.create({
-            baseURL: this.config.apiUrl || 'https://skinsback.com/api.php',
+            baseURL: this.config.apiUrl || API_URL,
         })
         API.interceptorsInit.call(this, this.config);
     }

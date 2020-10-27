@@ -1,5 +1,6 @@
 import WS from 'ws';
 import {SignatureWebSocketsBuilder} from './SignatureGenerator';
+import {WS_URL} from "./defaultConfig";
 import {
     SocketData,
     SubscribeCallback,
@@ -9,7 +10,7 @@ import {
 
 const getConnectedURL = ({shop_id, secret_key, socket_url}: WebSocketConfig) => {
     const signature = SignatureWebSocketsBuilder(shop_id, secret_key);
-    return `${socket_url}/?shopid=${shop_id}&signature=${signature}`
+    return `${socket_url || WS_URL}/?shopid=${shop_id}&signature=${signature}`
 };
 
 class WebSockets extends WS {

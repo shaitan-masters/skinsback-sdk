@@ -1,7 +1,7 @@
 export interface WebSocketConfig {
     shop_id: string | number,
     secret_key: string,
-    socket_url: string,
+    socket_url?: string,
 }
 
 export type EventStatuses =
