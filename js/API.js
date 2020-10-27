@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const SignatureGenerator_1 = require("./SignatureGenerator");
+const defaultConfig_1 = require("./defaultConfig");
 const types_1 = require("./types");
 class API {
     constructor(apiConfig) {
@@ -52,7 +53,7 @@ class API {
         };
         this.config = apiConfig;
         this.axios = axios_1.default.create({
-            baseURL: this.config.apiUrl || 'https://skinsback.com/api.php',
+            baseURL: this.config.apiUrl || defaultConfig_1.API_URL,
         });
         API.interceptorsInit.call(this, this.config);
     }
