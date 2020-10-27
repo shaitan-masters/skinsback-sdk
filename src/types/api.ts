@@ -72,7 +72,7 @@ export interface OrderModel{
     user_amount_in_currencies?: {[key: string]: any},
     offer_date?: string,
     skins_send_date?: string,
-    skins?: any[] //TODO add skin model
+    skins?: Array<{name: string, price: string}>
 }
 
 export interface OrderStatusResponse extends OrderModel{
