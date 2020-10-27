@@ -14,7 +14,7 @@ import {API} from 'skinsback-sdk';
 ## Constructor options
 
 - `options[shop_id]`: your shop_id key **required**
-- `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=signature).
+- `options[secret_key]`: Your personal `secret key` for generate signature **required**. [More about generate signature](https://skinsback.com/profile.php?act=api&item=signature).
 - `options[apiUrl]`: url to API. *Default: `https://skinsback.com/api.php`.*
 
 #### Example
@@ -127,7 +127,7 @@ import {WebSockets} from 'skinsback-sdk';
 
 - `options[shop_id]`: your shop_id key **required**
 - `options[secret_key]`: Your personal `secret key` for generate signature. [More about generate signature](https://skinsback.com/profile.php?act=api&item=market_websocket) **required**.
-- `options[socket_url]`: SkinsBack socket url **required**. [Show more](https://skinsback.com/profile.php?act=api&item=market_websocket)
+- `options[socket_url]`: SkinsBack socket url [Show more](https://skinsback.com/profile.php?act=api&item=market_websocket)
 ####Example
 ```javascript
 import {WebSockets} from 'skinsback-sdk';
