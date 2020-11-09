@@ -107,12 +107,14 @@ class API {
     public buyItemByNameAndSendToUser = (
         data: {partner: string, token: string, max_price: number, name: string, game: GameTypes, custom_id?: number}
     ): Promise<BuyItemResponse> => {
+        data.partner = data.partner.toString();
         return this.axios.post('', {...data, method: API_METHODS.BUY_ITEM_AND_SEND})
     }
 
     public buyItemByIdAndSendToUser = (
         data: { partner: string, token: string, max_price: number, id: number | string, custom_id?: number}
     ): Promise<BuyItemResponse> => {
+        data.partner = data.partner.toString();
         return this.axios.post('', {...data, method: API_METHODS.BUY_ITEM_AND_SEND})
     }
 

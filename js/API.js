@@ -40,9 +40,11 @@ class API {
             return this.axios.post('', { name, game, method: types_1.API_METHODS.SEARCH_ITEMS });
         };
         this.buyItemByNameAndSendToUser = (data) => {
+            data.partner = data.partner.toString();
             return this.axios.post('', { ...data, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
         };
         this.buyItemByIdAndSendToUser = (data) => {
+            data.partner = data.partner.toString();
             return this.axios.post('', { ...data, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
         };
         this.getInfoAboutBoughtItem = (buy_id, custom_ids) => {
