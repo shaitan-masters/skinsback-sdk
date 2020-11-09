@@ -11,7 +11,12 @@ import {
     ServerStatusResponse,
     CallbackErrorListResponse,
     PriceListResponse,
-    FindItemsResponse, BuyItemResponse, BoughtItemResponse, BoughtItemsHistoryResponse
+    FindItemsResponse,
+    BuyItemResponse,
+    BoughtItemResponse,
+    BoughtItemsHistoryResponse,
+    BalanceResponse,
+    Currencies,
 } from "./types";
 
 class API {
@@ -56,11 +61,11 @@ class API {
         });
     }
 
-    public getBalance = () => {
+    public getBalance = (): Promise<BalanceResponse> => {
         return this.axios.post('', {method: API_METHODS.BALANCE})
     }
 
-    public getCurrencies = () => {
+    public getCurrencies = (): Promise<Currencies> => {
         return this.axios.post('', {method: API_METHODS.GET_CURRENCIES})
     }
 

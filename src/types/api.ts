@@ -55,6 +55,19 @@ export interface Status {
     status: ResponseStatusType
 }
 
+export interface BalanceResponse extends Status {
+    balance: string,
+    balance_in_currencies: {[key: string]: string},
+    deals_sum: string,
+    deals_sum_in_currencies: {[key: string]: string},
+    withdraw_sum: string,
+    withdraw_sum_in_currencies: {[key: string]: string}
+}
+
+export interface Currencies extends Status {
+    items: Array<{ code: string, name: string, rate: string }>
+}
+
 export interface CreateOrderResponse extends Status {
     url: string,
     transaction_id: number,
