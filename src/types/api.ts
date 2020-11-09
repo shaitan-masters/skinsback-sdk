@@ -33,11 +33,12 @@ export enum API_METHODS {
     GET_MARKET_PRICE_LIST='market_pricelist',
     SEARCH_ITEMS='market_search',
     BUY_ITEM_AND_SEND='market_buy',
-    GET_INFO_ABOUT_BOUGHT_ITEM='market_getinfo'
+    GET_INFO_ABOUT_BOUGHT_ITEM='market_getinfo',
+    GET_HISTORY='market_history'
 }
 
 export type GameTypes = 'csgo' | 'dota2'
-export type ResponseStatusType = 'success' | 'error';
+export type ResponseStatusType = 'success';
 export type OrderStatusType = 'pending' | 'fail' | 'success';
 export type ReasonStatusServerType = 'site_off' | 'no_bots';
 export type OfferStatusType =
@@ -81,7 +82,7 @@ export interface OrderModel{
     amount?: string,
     amount_currency?: string,
     amount_in_currencies?: {[key: string]: any},
-    user_amount: string,
+    user_amount?: string,
     user_amount_in_currencies?: {[key: string]: any},
     offer_date?: string,
     skins_send_date?: string,
@@ -92,9 +93,9 @@ export interface OrderStatusResponse extends OrderModel{
     status: OrderStatusType,
 }
 
-export interface OrdersStatusResponse extends OrderModel{
+export interface OrdersStatusResponse {
     status: OrderStatusType,
-    items?: Array<OrderModel>
+    items: Array<OrderModel>
 }
 
 export interface ServerStatusResponse extends Status {
@@ -107,10 +108,11 @@ export interface CallbackErrorListResponse extends Status {
 }
 
 export interface PriceListResponse extends Status {
-    last_update?: string,
-    items?: Array<{
+    last_update: string,
+    items: Array<{
         name: string,
         price: string,
+        classid: string,
         count: string
     }>
 }

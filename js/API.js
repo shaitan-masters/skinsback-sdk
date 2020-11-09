@@ -55,7 +55,7 @@ class API {
             return this.axios.post('', { ...data, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
         };
         this.getBoughtItemsHistory = ({ starting, ending }) => {
-            return this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
+            return this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_HISTORY });
         };
         this.config = apiConfig;
         this.axios = axios_1.default.create({

@@ -130,7 +130,7 @@ class API {
         starting,
         ending
     }: {starting: number, ending: number}): Promise<BoughtItemsHistoryResponse> => {
-        return this.axios.post('', {starting, ending, method: API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM})
+        return this.axios.post('', {starting, ending, method: API_METHODS.GET_HISTORY})
     }
 
 }
