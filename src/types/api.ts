@@ -6,6 +6,10 @@ export interface ApiConfig {
     shop_id: number | string,
     secret_key: string,
     apiUrl?: string,
+    logsPath?: string,
+    enableLogs?: boolean;
+    excludeMethods?: Array<string>,
+    amountOfLastDaysOfSavingLogs?: number;
 }
 
 export interface Item {
