@@ -79,13 +79,19 @@ api.getMarketPriceList([game])
 ```javascript
 const name = 'FAMAS' // name of skin
 const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
-api.getMarketPriceList(name, [game]) 
+api.findItemsByName(name, [game]);
 ```
 * [MARKET: Buy skin by skin name and send to user](https://skinsback.com/profile.php?act=api&item=market_buy) 
 ```javascript
-const name = 'FAMAS' // name of skin
-const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
-api.buyItemByNameAndSendToUser(name, [game]) 
+const params = {
+    partner: string, // partner value from user trade URL
+    token: string, //   token value from user trade URL
+    max_price: number, // max skin cost for buying (as USD). Used as a cost limiter.
+    name: string, // Skin name (market hash name)
+    game: string, // Game types 'dota2' or 'csgo'. Default: 'csgo'
+    custom_id: number, // ID on your system. Can be used to prevent duplicate purchases.
+}
+api.buyItemByNameAndSendToUser(params);
 ```
 * [MARKET: Buy skin by skin Id and send to user](https://skinsback.com/profile.php?act=api&item=market_buy) 
 ```javascript
@@ -93,15 +99,17 @@ const params = {
     partner: string, // partner value from user trade URL
     token: string, //   token value from user trade URL
     max_price: number, // max skin cost for buying (as USD). Used as a cost limiter.
-    name: string, // Skin name (market hash name)
-    game: string // Game types 'dota2' or 'csgo'. Default: 'csgo'
+    id: number, // Item ID from method findItemsByName
+    custom_id: number, // ID on your system. Can be used to prevent duplicate purchases.
 }
 api.buyItemByIdAndSendToUser(params) 
 ```
 * [MARKET: Get purchase information](https://skinsback.com/profile.php?act=api&item=market_getinfo) 
 ```javascript
 const buy_id = 12354322 /// buy_id from method buyItemByIdAndSendToUser or buyItemByNameAndSendToUser
-api.getInfoAboutBoughtItem(buy_id) 
+const custom_ids = [245221] /// custom_id from market_buy method. If this parameter is specified, 
+/// the response will contain an items array containing information on each purchase.
+api.getInfoAboutBoughtItem(buy_id, [custom_ids]);
 ```
 * [MARKET: Purchase history](https://skinsback.com/profile.php?act=api&item=market_history) 
 ```javascript

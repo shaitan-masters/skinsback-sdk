@@ -100,19 +100,23 @@ class API {
     }
 
     public buyItemByNameAndSendToUser = (
-        data: {partner: string, token: string, max_price: number, name: string, game: GameTypes}
+        data: {partner: string, token: string, max_price: number, name: string, game: GameTypes, custom_id?: number}
     ): Promise<BuyItemResponse> => {
         return this.axios.post('', {...data, method: API_METHODS.BUY_ITEM_AND_SEND})
     }
 
     public buyItemByIdAndSendToUser = (
-        data: {partner: string, token: string, max_price: number, id: number | string}
+        data: { partner: string, token: string, max_price: number, id: number | string, custom_id?: number}
     ): Promise<BuyItemResponse> => {
         return this.axios.post('', {...data, method: API_METHODS.BUY_ITEM_AND_SEND})
     }
 
-    public getInfoAboutBoughtItem = (buy_id: string | number): Promise<BoughtItemResponse> => {
-        return this.axios.post('', {buy_id, method: API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM})
+    public getInfoAboutBoughtItem = (buy_id: string | number, custom_ids?: Array<number>): Promise<BoughtItemResponse> => {
+        const data: {buy_id: string | number, custom_ids?: Array<number>} = {buy_id}
+        if (custom_ids instanceof Array) {
+            data.custom_ids = custom_ids;
+        }
+        return this.axios.post('', {...data, method: API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM})
     }
 
     public getBoughtItemsHistory = ({
