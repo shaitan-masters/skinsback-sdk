@@ -156,3 +156,37 @@ sockets.connect(cb)
 const cb = () => console.log('Disconnected')
 sockets.disconnect(cb)
 ```
+
+## Trace requests
+Logged request to json files. All logs saved as file with name in format as date *mm_dd_yyyy.json*.
+All logs saving to path specified in the description `options[logsPath]`
+<br>
+Example: **11_06_2020.json**
+## Usage
+```javascript
+const API = require('skinsback-sdk').API;
+```
+or
+```javascript
+import {API} from 'skinsback-sdk';
+````
+## Constructor options
+
+- `options[logsPath]`: path to save files with logs.
+- `options[enableLogs]`: Need to create logs. Default: **false**.
+- `options[excludeMethods]`: List with methods that not used in trace. Default empty array.
+
+#### Example
+```javascript
+import {API} from 'skinsback-sdk';
+
+const options = {
+    shop_id: 1490,
+    secret_key: 'XCvlP45Y2dH2UmHhk',
+    logsPath: 'logs/skinsback-api',
+    enableLogs: true,
+    excludeMethods: ['market_pricelist', 'market_search']
+}
+
+const api = new API(options);
+```
