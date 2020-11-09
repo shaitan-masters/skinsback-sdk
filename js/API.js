@@ -45,8 +45,12 @@ class API {
         this.buyItemByIdAndSendToUser = (data) => {
             return this.axios.post('', { ...data, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
         };
-        this.getInfoAboutBoughtItem = (buy_id) => {
-            return this.axios.post('', { buy_id, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
+        this.getInfoAboutBoughtItem = (buy_id, custom_ids) => {
+            const data = { buy_id };
+            if (custom_ids instanceof Array) {
+                data.custom_ids = custom_ids;
+            }
+            return this.axios.post('', { ...data, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
         };
         this.getBoughtItemsHistory = ({ starting, ending }) => {
             return this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
