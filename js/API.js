@@ -7,55 +7,126 @@ const axios_1 = __importDefault(require("axios"));
 const SignatureGenerator_1 = require("./SignatureGenerator");
 const defaultConfig_1 = require("./defaultConfig");
 const types_1 = require("./types");
+const Errors_1 = require("./Errors");
 class API {
     constructor(apiConfig) {
-        this.getBalance = () => {
-            return this.axios.post('', { method: types_1.API_METHODS.BALANCE });
-        };
-        this.getCurrencies = () => {
-            return this.axios.post('', { method: types_1.API_METHODS.GET_CURRENCIES });
-        };
-        this.getOrders = ({ starting, ending }) => {
-            return this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_ORDERS });
-        };
-        this.getOrderStatusByTransactionId = (transaction_id) => {
-            return this.axios.post('', { transaction_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
-        };
-        this.getOrderStatusByOrderId = (order_id) => {
-            return this.axios.post('', { order_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
-        };
-        this.createOrder = (order_id) => {
-            return this.axios.post('', { order_id, method: types_1.API_METHODS.CREATE_ORDER });
-        };
-        this.serverStatus = () => {
-            return this.axios.post('', { method: types_1.API_METHODS.GET_SERVER_STATUS });
-        };
-        this.getErrorCallbackList = () => {
-            return this.axios.post('', { method: types_1.API_METHODS.GET_ERROR_CALLBACK_ERROR_LIST });
-        };
-        this.getMarketPriceList = (game = 'csgo') => {
-            return this.axios.post('', { game, method: types_1.API_METHODS.GET_MARKET_PRICE_LIST });
-        };
-        this.findItemsByName = (name, game = 'csgo') => {
-            return this.axios.post('', { name, game, method: types_1.API_METHODS.SEARCH_ITEMS });
-        };
-        this.buyItemByNameAndSendToUser = (data) => {
-            data.partner = data.partner.toString();
-            return this.axios.post('', { ...data, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
-        };
-        this.buyItemByIdAndSendToUser = (data) => {
-            data.partner = data.partner.toString();
-            return this.axios.post('', { ...data, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
-        };
-        this.getInfoAboutBoughtItem = (buy_id, custom_ids) => {
-            const data = { buy_id };
-            if (custom_ids instanceof Array) {
-                data.custom_ids = custom_ids;
+        this.getBalance = async () => {
+            try {
+                return await this.axios.post('', { method: types_1.API_METHODS.BALANCE });
             }
-            return this.axios.post('', { ...data, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
+            catch (e) {
+                throw new Errors_1.DefaultError(e);
+            }
         };
-        this.getBoughtItemsHistory = ({ starting, ending }) => {
-            return this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_HISTORY });
+        this.getCurrencies = async () => {
+            try {
+                return await this.axios.post('', { method: types_1.API_METHODS.GET_CURRENCIES });
+            }
+            catch (e) {
+                throw new Errors_1.DefaultError(e);
+            }
+        };
+        this.getOrders = async ({ starting, ending }) => {
+            try {
+                return await this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_ORDERS });
+            }
+            catch (e) {
+                throw new Errors_1.DefaultError(e);
+            }
+        };
+        this.getOrderStatusByTransactionId = async (transaction_id) => {
+            try {
+                return await this.axios.post('', { transaction_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
+            }
+            catch (e) {
+                throw new Errors_1.OrderStatusError(e);
+            }
+        };
+        this.getOrderStatusByOrderId = async (order_id) => {
+            try {
+                return await this.axios.post('', { order_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
+            }
+            catch (e) {
+                throw new Errors_1.OrderStatusError(e);
+            }
+        };
+        this.createOrder = async (order_id) => {
+            try {
+                return await this.axios.post('', { order_id, method: types_1.API_METHODS.CREATE_ORDER });
+            }
+            catch (e) {
+                throw new Errors_1.CreateOrderError(e);
+            }
+        };
+        this.serverStatus = async () => {
+            try {
+                return await this.axios.post('', { method: types_1.API_METHODS.GET_SERVER_STATUS });
+            }
+            catch (e) {
+                throw new Errors_1.DefaultError(e);
+            }
+        };
+        this.getErrorCallbackList = async () => {
+            try {
+                return await this.axios.post('', { method: types_1.API_METHODS.GET_ERROR_CALLBACK_ERROR_LIST });
+            }
+            catch (e) {
+                throw new Errors_1.DefaultError(e);
+            }
+        };
+        this.getMarketPriceList = async (game = 'csgo') => {
+            try {
+                return await this.axios.post('', { game, method: types_1.API_METHODS.GET_MARKET_PRICE_LIST });
+            }
+            catch (e) {
+                throw new Errors_1.PriceListError(e);
+            }
+        };
+        this.findItemsByName = async (name, game = 'csgo') => {
+            try {
+                return await this.axios.post('', { name, game, method: types_1.API_METHODS.SEARCH_ITEMS });
+            }
+            catch (e) {
+                throw new Errors_1.MarketSearchError(e);
+            }
+        };
+        this.buyItemByNameAndSendToUser = async (params) => {
+            try {
+                params.partner = params.partner.toString();
+                return await this.axios.post('', { ...params, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
+            }
+            catch (e) {
+                throw new Errors_1.BuyItemError(e);
+            }
+        };
+        this.buyItemByIdAndSendToUser = async (params) => {
+            try {
+                params.partner = params.partner.toString();
+                return await this.axios.post('', { ...params, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
+            }
+            catch (e) {
+                throw new Errors_1.BuyItemError(e);
+            }
+        };
+        this.getInfoAboutBoughtItem = async (buy_id, custom_ids) => {
+            try {
+                const params = { buy_id };
+                if (custom_ids instanceof Array) {
+                    params.custom_ids = custom_ids;
+                }
+                return await this.axios.post('', { ...params, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
+            }
+            catch (e) {
+                throw new Errors_1.OrderInfoError(e);
+            }
+        };
+        this.getBoughtItemsHistory = async ({ starting, ending }) => {
+            try {
+                return await this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_HISTORY });
+            }
+            catch (e) {
+                throw new Errors_1.HistoryError(e);
+            }
         };
         this.config = apiConfig;
         this.axios = axios_1.default.create({
@@ -75,7 +146,7 @@ class API {
             config.data = data;
             // Return modified config with shop_id and signature
             return config;
-        }, error => Promise.reject(error));
+        }, error => Promise.reject(new Error(error)));
         // Response interceptor
         this.axios.interceptors.response.use((response) => {
             // When received error, response has status 200? but it has status field in response body with error
@@ -86,7 +157,7 @@ class API {
             }
             return response.data;
         }, error => {
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         });
     }
 }

@@ -6,6 +6,7 @@
     "target": "es2019",
     "strict": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
