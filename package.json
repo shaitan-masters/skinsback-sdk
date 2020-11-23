@@ -1,6 +1,6 @@
 {
   "name": "skinsback-sdk",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "SDK for integrations with skinsback.com",
   "main": "index.js",
   "types": "js/index.d.ts",
@@ -21,7 +21,7 @@
     "csgo",
     "dota2"
   ],
-  "author": "Danil Naydyonov",
+  "author": "Shaitan Masters",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/shaitan-masters/skinsback-sdk/issues"
@@ -29,16 +29,16 @@
   "homepage": "https://github.com/shaitan-masters/skinsback-sdk#readme",
   "dependencies": {
     "@types/md5": "^2.2.1",
-    "@types/node": "^14.14.6",
-    "@types/ws": "^7.2.9",
+    "@types/node": "^14.14.9",
+    "@types/ws": "^7.4.0",
     "axios": "^0.21.0",
     "crypto": "^1.0.1",
     "i": "^0.3.6",
     "md5": "^2.3.0",
     "nodemon": "^2.0.6",
-    "npm": "^6.14.8",
+    "npm": "^6.14.9",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5",
-    "ws": "^7.3.1"
+    "typescript": "^4.1.2",
+    "ws": "^7.4.0"
   }
 }
