@@ -12,6 +12,7 @@
     "noImplicitAny": true,
     "removeComments": false,
     "preserveConstEnums": true,
+    "declaration": true,
     "sourceMap": false,
     "rootDir": "src"
   },
