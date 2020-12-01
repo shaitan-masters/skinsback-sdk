@@ -8,19 +8,21 @@ const SignatureGenerator_1 = require("./SignatureGenerator");
 const defaultConfig_1 = require("./defaultConfig");
 const types_1 = require("./types");
 const Errors_1 = require("./Errors");
-class API {
+const TraceLimiter_1 = __importDefault(require("./TraceLimiter"));
+class API extends TraceLimiter_1.default {
     constructor(apiConfig) {
+        super(apiConfig.trace || null);
         this.getBalance = async () => {
             try {
-                return await this.axios.post('', { method: types_1.API_METHODS.BALANCE });
+                return await this._fetch({ method: types_1.API_METHODS.BALANCE });
             }
             catch (e) {
-                throw new Errors_1.DefaultError(e);
+                throw new Error(e);
             }
         };
         this.getCurrencies = async () => {
             try {
-                return await this.axios.post('', { method: types_1.API_METHODS.GET_CURRENCIES });
+                return await this._fetch({ method: types_1.API_METHODS.GET_CURRENCIES });
             }
             catch (e) {
                 throw new Errors_1.DefaultError(e);
@@ -28,7 +30,7 @@ class API {
         };
         this.getOrders = async ({ starting, ending }) => {
             try {
-                return await this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_ORDERS });
+                return await this._fetch({ starting, ending, method: types_1.API_METHODS.GET_ORDERS });
             }
             catch (e) {
                 throw new Errors_1.DefaultError(e);
@@ -36,7 +38,7 @@ class API {
         };
         this.getOrderStatusByTransactionId = async (transaction_id) => {
             try {
-                return await this.axios.post('', { transaction_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
+                return await this._fetch({ transaction_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
             }
             catch (e) {
                 throw new Errors_1.OrderStatusError(e);
@@ -44,7 +46,7 @@ class API {
         };
         this.getOrderStatusByOrderId = async (order_id) => {
             try {
-                return await this.axios.post('', { order_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
+                return await this._fetch({ order_id, method: types_1.API_METHODS.GET_ORDER_STATUS });
             }
             catch (e) {
                 throw new Errors_1.OrderStatusError(e);
@@ -52,7 +54,7 @@ class API {
         };
         this.createOrder = async (order_id) => {
             try {
-                return await this.axios.post('', { order_id, method: types_1.API_METHODS.CREATE_ORDER });
+                return await this._fetch({ order_id, method: types_1.API_METHODS.CREATE_ORDER });
             }
             catch (e) {
                 throw new Errors_1.CreateOrderError(e);
@@ -60,7 +62,7 @@ class API {
         };
         this.serverStatus = async () => {
             try {
-                return await this.axios.post('', { method: types_1.API_METHODS.GET_SERVER_STATUS });
+                return await this._fetch({ method: types_1.API_METHODS.GET_SERVER_STATUS });
             }
             catch (e) {
                 throw new Errors_1.DefaultError(e);
@@ -68,7 +70,7 @@ class API {
         };
         this.getErrorCallbackList = async () => {
             try {
-                return await this.axios.post('', { method: types_1.API_METHODS.GET_ERROR_CALLBACK_ERROR_LIST });
+                return await this._fetch({ method: types_1.API_METHODS.GET_ERROR_CALLBACK_ERROR_LIST });
             }
             catch (e) {
                 throw new Errors_1.DefaultError(e);
@@ -76,7 +78,7 @@ class API {
         };
         this.getMarketPriceList = async (game = 'csgo') => {
             try {
-                return await this.axios.post('', { game, method: types_1.API_METHODS.GET_MARKET_PRICE_LIST });
+                return await this._fetch({ game, method: types_1.API_METHODS.GET_MARKET_PRICE_LIST });
             }
             catch (e) {
                 throw new Errors_1.PriceListError(e);
@@ -84,7 +86,7 @@ class API {
         };
         this.findItemsByName = async (name, game = 'csgo') => {
             try {
-                return await this.axios.post('', { name, game, method: types_1.API_METHODS.SEARCH_ITEMS });
+                return await this._fetch({ name, game, method: types_1.API_METHODS.SEARCH_ITEMS });
             }
             catch (e) {
                 throw new Errors_1.MarketSearchError(e);
@@ -93,7 +95,7 @@ class API {
         this.buyItemByNameAndSendToUser = async (params) => {
             try {
                 params.partner = params.partner.toString();
-                return await this.axios.post('', { ...params, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
+                return await this._fetch({ ...params, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
             }
             catch (e) {
                 throw new Errors_1.BuyItemError(e);
@@ -102,7 +104,7 @@ class API {
         this.buyItemByIdAndSendToUser = async (params) => {
             try {
                 params.partner = params.partner.toString();
-                return await this.axios.post('', { ...params, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
+                return await this._fetch({ ...params, method: types_1.API_METHODS.BUY_ITEM_AND_SEND });
             }
             catch (e) {
                 throw new Errors_1.BuyItemError(e);
@@ -114,7 +116,7 @@ class API {
                 if (custom_ids instanceof Array) {
                     params.custom_ids = custom_ids;
                 }
-                return await this.axios.post('', { ...params, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
+                return await this._fetch({ ...params, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
             }
             catch (e) {
                 throw new Errors_1.OrderInfoError(e);
@@ -122,7 +124,7 @@ class API {
         };
         this.getBoughtItemsHistory = async ({ starting, ending }) => {
             try {
-                return await this.axios.post('', { starting, ending, method: types_1.API_METHODS.GET_HISTORY });
+                return await this._fetch({ starting, ending, method: types_1.API_METHODS.GET_HISTORY });
             }
             catch (e) {
                 throw new Errors_1.HistoryError(e);
@@ -159,6 +161,10 @@ class API {
         }, error => {
             return Promise.reject(new Error(error));
         });
+    }
+    _fetch(data) {
+        const post = (arg) => this.axios.post('', arg);
+        return this.schedule(post, data);
     }
 }
 exports.default = API;

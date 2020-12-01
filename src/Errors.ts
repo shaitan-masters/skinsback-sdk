@@ -13,6 +13,7 @@ export enum DefaultErrorsEnum {
     invalid_signature='invalid_signature',
     shop_not_active='shop_not_active',
     invalid_method='invalid_method',
+    request_limit_reached='request_limit_reached',
 }
 
 type DefaultErrorType = keyof typeof DefaultErrorsEnum

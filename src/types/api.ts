@@ -1,3 +1,5 @@
+import {TraceLimiterConfig} from "./traceLimiter";
+
 export interface Params {
     [key: string]: any;
 }
@@ -6,6 +8,7 @@ export interface ApiConfig {
     shop_id: number | string,
     secret_key: string,
     apiUrl?: string,
+    trace?: TraceLimiterConfig
 }
 
 export interface Item {

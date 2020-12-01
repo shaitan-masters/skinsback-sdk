@@ -15,6 +15,7 @@ var DefaultErrorsEnum;
     DefaultErrorsEnum["invalid_signature"] = "invalid_signature";
     DefaultErrorsEnum["shop_not_active"] = "shop_not_active";
     DefaultErrorsEnum["invalid_method"] = "invalid_method";
+    DefaultErrorsEnum["request_limit_reached"] = "request_limit_reached";
 })(DefaultErrorsEnum = exports.DefaultErrorsEnum || (exports.DefaultErrorsEnum = {}));
 // CreateOrderErrors
 var CreateOrderErrorsEnum;

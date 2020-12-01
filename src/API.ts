@@ -26,17 +26,22 @@ import {
     OrderStatusError,
     PriceListError
 } from './Errors';
+import TraceLimiter from "./TraceLimiter";
 
-class API {
+class API extends TraceLimiter{
     private static axios: AxiosInstance;
     private readonly config: ApiConfig;
     private axios: AxiosInstance;
 
     constructor(apiConfig: ApiConfig) {
+        super(apiConfig.trace || null)
+
         this.config = apiConfig;
+
         this.axios = axios.create({
             baseURL: this.config.apiUrl || API_URL,
         })
+
         API.interceptorsInit.call(this, this.config);
     }
 
@@ -71,16 +76,16 @@ class API {
 
     public getBalance = async (): Promise<BalanceResponse> => {
         try {
-            return await this.axios.post('', {method: API_METHODS.BALANCE})
+            return await this._fetch<BalanceResponse>({method: API_METHODS.BALANCE})
         } catch (e) {
-            throw new DefaultError(e);
+            throw new Error(e);
         }
 
     }
 
     public getCurrencies = async (): Promise<Currencies> => {
         try {
-            return await this.axios.post('', {method: API_METHODS.GET_CURRENCIES})
+            return await this._fetch<Currencies>({method: API_METHODS.GET_CURRENCIES})
         } catch (e) {
             throw new DefaultError(e);
         }
@@ -91,7 +96,7 @@ class API {
         ending
     }: {starting: number, ending: number}): Promise<OrdersStatusResponse> => {
         try {
-            return  await this.axios.post('', {starting, ending, method: API_METHODS.GET_ORDERS})
+            return await this._fetch<OrdersStatusResponse>( {starting, ending, method: API_METHODS.GET_ORDERS})
         } catch (e) {
             throw new DefaultError(e);
         }
@@ -99,7 +104,7 @@ class API {
 
     public getOrderStatusByTransactionId = async (transaction_id: number | string): Promise<OrderStatusResponse> => {
         try {
-            return await this.axios.post('', {transaction_id, method: API_METHODS.GET_ORDER_STATUS})
+            return await this._fetch<OrderStatusResponse>({transaction_id, method: API_METHODS.GET_ORDER_STATUS})
         } catch (e) {
             throw new OrderStatusError(e);
         }
@@ -107,7 +112,7 @@ class API {
 
     public getOrderStatusByOrderId = async (order_id: number): Promise<OrderStatusResponse> => {
         try {
-            return await this.axios.post('', {order_id, method: API_METHODS.GET_ORDER_STATUS})
+            return await this._fetch<OrderStatusResponse>({order_id, method: API_METHODS.GET_ORDER_STATUS})
         } catch (e) {
             throw new OrderStatusError(e);
         }
@@ -115,7 +120,7 @@ class API {
 
     public createOrder = async (order_id: number): Promise<CreateOrderResponse> => {
         try {
-            return await this.axios.post('', {order_id, method: API_METHODS.CREATE_ORDER})
+            return await this._fetch<CreateOrderResponse>({order_id, method: API_METHODS.CREATE_ORDER})
         } catch (e) {
             throw new CreateOrderError(e);
         }
@@ -123,7 +128,7 @@ class API {
 
     public serverStatus = async (): Promise<ServerStatusResponse> => {
         try {
-            return await this.axios.post('', {method: API_METHODS.GET_SERVER_STATUS})
+            return await this._fetch<ServerStatusResponse>({method: API_METHODS.GET_SERVER_STATUS})
         } catch (e) {
             throw new DefaultError(e);
         }
@@ -131,7 +136,7 @@ class API {
 
     public getErrorCallbackList = async (): Promise<CallbackErrorListResponse> => {
         try {
-            return await this.axios.post('', {method: API_METHODS.GET_ERROR_CALLBACK_ERROR_LIST})
+            return await this._fetch<CallbackErrorListResponse>({method: API_METHODS.GET_ERROR_CALLBACK_ERROR_LIST})
         } catch (e) {
             throw new DefaultError(e);
         }
@@ -139,7 +144,7 @@ class API {
 
     public getMarketPriceList = async (game: GameTypes = 'csgo'): Promise<PriceListResponse> => {
         try {
-            return await this.axios.post('', {game, method: API_METHODS.GET_MARKET_PRICE_LIST})
+            return await this._fetch<PriceListResponse>({game, method: API_METHODS.GET_MARKET_PRICE_LIST})
         } catch (e) {
             throw new PriceListError(e);
         }
@@ -147,7 +152,7 @@ class API {
 
     public findItemsByName = async (name: string, game: GameTypes = 'csgo'): Promise<FindItemsResponse> => {
         try {
-            return await this.axios.post('', {name, game, method: API_METHODS.SEARCH_ITEMS})
+            return await this._fetch<FindItemsResponse>({name, game, method: API_METHODS.SEARCH_ITEMS})
         } catch (e) {
             throw new MarketSearchError(e);
         }
@@ -158,7 +163,7 @@ class API {
     ): Promise<BuyItemResponse> => {
         try {
             params.partner = params.partner.toString();
-            return await this.axios.post('', {...params, method: API_METHODS.BUY_ITEM_AND_SEND})
+            return await this._fetch<BuyItemResponse>({...params, method: API_METHODS.BUY_ITEM_AND_SEND})
         } catch (e) {
             throw new BuyItemError(e);
         }
@@ -169,7 +174,7 @@ class API {
     ): Promise<BuyItemResponse> => {
         try {
             params.partner = params.partner.toString();
-            return await this.axios.post('', {...params, method: API_METHODS.BUY_ITEM_AND_SEND})
+            return await this._fetch<BuyItemResponse>({...params, method: API_METHODS.BUY_ITEM_AND_SEND})
         } catch (e) {
             throw new BuyItemError(e);
         }
@@ -181,7 +186,7 @@ class API {
             if (custom_ids instanceof Array) {
                 params.custom_ids = custom_ids;
             }
-            return await this.axios.post('', {...params, method: API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM})
+            return await this._fetch<BoughtItemResponse>({...params, method: API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM})
         } catch (e) {
             throw new OrderInfoError(e);
         }
@@ -192,10 +197,15 @@ class API {
         ending
     }: {starting: number, ending: number}): Promise<BoughtItemsHistoryResponse> => {
         try {
-            return await this.axios.post('', {starting, ending, method: API_METHODS.GET_HISTORY})
+            return await this._fetch<BoughtItemsHistoryResponse>({starting, ending, method: API_METHODS.GET_HISTORY})
         } catch (e) {
             throw new HistoryError(e);
         }
+    }
+
+    private _fetch<T>(data: {[key: string]:any}): Promise<T> {
+        const post = (arg: {[key: string]:any}): Promise<T> => this.axios.post('', arg);
+        return this.schedule(post, data);
     }
 
 }

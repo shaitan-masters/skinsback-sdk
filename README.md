@@ -29,6 +29,28 @@ const options = {
 const api = new API(options);
 ```
 
+## Trace limiter
+## Constructor options
+
+- `options[requestLimit]`: How many request will be able running per **timeLimit**. *Default: 150*
+- `options[timeLimit]`: interval between which a certain number of requests is allowed. *Default: 60000 milliseconds*
+
+#### Example
+```javascript
+import {API} from 'skinsback-sdk';
+
+const options = {
+    shop_id: 1490,
+    secret_key: 'XCvlP45Y2dH2UmHhk',
+    trace: {
+        requestLimit: 50,
+        timeLimit: 60000,
+    }
+}
+
+const api = new API(options);
+```
+
 ## Api methods
 All methods of api return a Promise.
 * [Check the balance on the site](https://skinsback.com/profile.php?act=api&item=balance) 
