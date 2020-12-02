@@ -67,12 +67,12 @@ class API {
                 return Promise.reject(response);
             }
             // Write response data with data to logs
-            trace && trace.logResponse(response)
+            trace && trace.logResponse(response);
             return response.data;
         },error => {
             // Write response data with error to logs
             trace && trace.logError(error);
-            return Promise.reject(error)
+            return Promise.reject(error);
         });
     }
 

@@ -11,14 +11,14 @@ class ServerErrorLog {
 exports.ServerErrorLog = ServerErrorLog;
 class ResponseLog {
     constructor(response) {
-        this.status = this.getStatus(response);
+        this.status = ResponseLog.getStatus(response);
         this.responseTime = new Date().toISOString();
         this.url = response.config.baseURL || '';
         this.method = JSON.parse(response.config.data).method;
         this.requestData = JSON.parse(response.config.data);
         this.responseData = response.data;
     }
-    getStatus(response) {
+    static getStatus(response) {
         if (response.data.status === 'success') {
             return 'Success';
         }

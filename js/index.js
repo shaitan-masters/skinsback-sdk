@@ -19,12 +19,3 @@ const WebSockets_1 = __importDefault(require("./WebSockets"));
 __exportStar(require("./types"), exports);
 exports.API = API_1.default;
 exports.WebSockets = WebSockets_1.default;
-const api = new exports.API({
-    shop_id: '2116',
-    secret_key: 'ZQflT12V2qK2UmGGHjr0',
-    logsPath: 'logs',
-    enableLogs: true,
-    excludeMethods: ['status'],
-    amountOfLastDaysOfSavingLogs: 3
-});
-api.getBalance().catch(e => { console.log(e); });

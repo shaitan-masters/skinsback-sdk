@@ -7,7 +7,7 @@ exports.checkFileOnValidName = exports.getLastDateOfDay = exports.getDate = expo
 const promises_1 = __importDefault(require("fs/promises"));
 const path_1 = __importDefault(require("path"));
 const fileNameRegExp = /^([0][1-9]|[1-2][0-9]|[3][0-1])_([0][1-9]|[1-2][0-9]|[3][0-1])_[0-9][0-9][0-9][0-9]\.(json)/g;
-exports.getLogFileName = async (pathToFile) => {
+const getLogFileName = async (pathToFile) => {
     const currentDate = new Date();
     const date = currentDate.getDate() <= 9 ? '0' + currentDate.getDate() : currentDate.getDate();
     const month = currentDate.getMonth() + 1 <= 9 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1);
@@ -26,7 +26,8 @@ exports.getLogFileName = async (pathToFile) => {
         return filePath;
     }
 };
-exports.getDate = (fileName) => {
+exports.getLogFileName = getLogFileName;
+const getDate = (fileName) => {
     const [month, day, year] = fileName.replace('.json', '').split('_');
     const date = new Date(`${month}/${day}/${year}`);
     date.setHours(0);
@@ -35,7 +36,8 @@ exports.getDate = (fileName) => {
     date.setMilliseconds(0);
     return date;
 };
-exports.getLastDateOfDay = (num) => {
+exports.getDate = getDate;
+const getLastDateOfDay = (num) => {
     const date = new Date();
     date.setDate(date.getDate() - (num - 1));
     date.setHours(0);
@@ -44,6 +46,8 @@ exports.getLastDateOfDay = (num) => {
     date.setMilliseconds(0);
     return date;
 };
-exports.checkFileOnValidName = (fileName) => {
+exports.getLastDateOfDay = getLastDateOfDay;
+const checkFileOnValidName = (fileName) => {
     return !!fileName.match(fileNameRegExp);
 };
+exports.checkFileOnValidName = checkFileOnValidName;
