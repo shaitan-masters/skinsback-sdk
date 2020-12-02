@@ -175,6 +175,7 @@ import {API} from 'skinsback-sdk';
 - `options[logsPath]`: path to save files with logs.
 - `options[enableLogs]`: Need to create logs. Default: **false**.
 - `options[excludeMethods]`: List with methods that not used in trace. Default empty array.
+- `options[amountOfLastDaysOfSavingLogs]`: Amount of last days for saving logs.
 
 #### Example
 ```javascript
@@ -185,7 +186,8 @@ const options = {
     secret_key: 'XCvlP45Y2dH2UmHhk',
     logsPath: 'logs/skinsback-api',
     enableLogs: true,
-    excludeMethods: ['market_pricelist', 'market_search']
+    excludeMethods: ['market_pricelist', 'market_search'],
+    amountOfLastDaysOfSavingLogs: 7
 }
 
 const api = new API(options);
