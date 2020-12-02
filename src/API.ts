@@ -159,7 +159,7 @@ class API extends TraceLimiter{
     }
 
     public buyItemByNameAndSendToUser = async (
-        params: {partner: string, token: string, max_price: number, name: string, game: GameTypes, custom_id?: number}
+        params: {partner: string, token: string, max_price?: number, name: string, game: GameTypes, custom_id?: number}
     ): Promise<BuyItemResponse> => {
         try {
             params.partner = params.partner.toString();
@@ -170,7 +170,7 @@ class API extends TraceLimiter{
     }
 
     public buyItemByIdAndSendToUser = async (
-        params: { partner: string, token: string, max_price: number, id: number | string, custom_id?: number}
+        params: { partner: string, token: string, max_price?: number, id: number | string, custom_id?: number}
     ): Promise<BuyItemResponse> => {
         try {
             params.partner = params.partner.toString();

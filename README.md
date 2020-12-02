@@ -108,7 +108,7 @@ api.findItemsByName(name, [game]);
 const params = {
     partner: string, // partner value from user trade URL
     token: string, //   token value from user trade URL
-    max_price: number, // max skin cost for buying (as USD). Used as a cost limiter.
+    max_price?: number, // max skin cost for buying (as USD). Used as a cost limiter.
     name: string, // Skin name (market hash name)
     game: string, // Game types 'dota2' or 'csgo'. Default: 'csgo'
     custom_id?: number, // ID on your system. Can be used to prevent duplicate purchases.
@@ -120,7 +120,7 @@ api.buyItemByNameAndSendToUser(params);
 const params = {
     partner: string, // partner value from user trade URL
     token: string, //   token value from user trade URL
-    max_price: number, // max skin cost for buying (as USD). Used as a cost limiter.
+    max_price?: number, // max skin cost for buying (as USD). Used as a cost limiter.
     id: number, // Item ID from method findItemsByName
     custom_id?: number, // ID on your system. Can be used to prevent duplicate purchases.
 }
