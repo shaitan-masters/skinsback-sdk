@@ -110,11 +110,14 @@ class API extends TraceLimiter_1.default {
                 throw new Errors_1.BuyItemError(e);
             }
         };
-        this.getInfoAboutBoughtItem = async (buy_id, custom_ids) => {
+        this.getInfoAboutBoughtItem = async (arg) => {
             try {
-                const params = { buy_id };
-                if (custom_ids instanceof Array) {
-                    params.custom_ids = custom_ids;
+                let params;
+                if (arg instanceof Array) {
+                    params = { custom_ids: arg };
+                }
+                else {
+                    params = { buy_id: arg };
                 }
                 return await this._fetch({ ...params, method: types_1.API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM });
             }

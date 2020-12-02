@@ -180,11 +180,13 @@ class API extends TraceLimiter{
         }
     }
 
-    public getInfoAboutBoughtItem = async (buy_id: string | number, custom_ids?: Array<number>): Promise<BoughtItemResponse> => {
+    public getInfoAboutBoughtItem = async (arg: string | number | Array<string>): Promise<BoughtItemResponse> => {
         try {
-            const params: {buy_id: string | number, custom_ids?: Array<number>} = {buy_id}
-            if (custom_ids instanceof Array) {
-                params.custom_ids = custom_ids;
+            let params;
+            if (arg instanceof Array) {
+                params = {custom_ids: arg};
+            } else {
+                params = {buy_id: arg}
             }
             return await this._fetch<BoughtItemResponse>({...params, method: API_METHODS.GET_INFO_ABOUT_BOUGHT_ITEM})
         } catch (e) {

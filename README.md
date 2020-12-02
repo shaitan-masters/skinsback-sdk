@@ -131,7 +131,9 @@ api.buyItemByIdAndSendToUser(params)
 const buy_id = 12354322 /// buy_id from method buyItemByIdAndSendToUser or buyItemByNameAndSendToUser
 const custom_ids = [245221] /// custom_id from market_buy method. If this parameter is specified, 
 /// the response will contain an items array containing information on each purchase.
-api.getInfoAboutBoughtItem(buy_id, [custom_ids]);
+
+api.getInfoAboutBoughtItem(buy_id); /// Get info by buy_id
+api.getInfoAboutBoughtItem(custom_ids); // Get info by custom_ids
 ```
 * [MARKET: Purchase history](https://skinsback.com/profile.php?act=api&item=market_history) 
 ```javascript
