@@ -1,6 +1,6 @@
 {
   "name": "skinsback-sdk",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "SDK for integrations with skinsback.com",
   "main": "index.js",
   "types": "js/index.d.ts",
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/shaitan-masters/skinsback-sdk#readme",
   "dependencies": {
     "@types/md5": "^2.2.1",
-    "@types/node": "^14.14.9",
+    "@types/node": "^14.14.10",
     "@types/ws": "^7.4.0",
     "axios": "^0.21.0",
     "crypto": "^1.0.1",
@@ -37,8 +37,8 @@
     "md5": "^2.3.0",
     "nodemon": "^2.0.6",
     "npm": "^6.14.9",
-    "ts-node": "^9.0.0",
+    "ts-node": "^9.1.0",
     "typescript": "^4.1.2",
-    "ws": "^7.4.0"
+    "ws": "^7.4.1"
   }
 }
