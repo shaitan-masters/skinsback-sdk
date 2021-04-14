@@ -29,6 +29,28 @@ const options = {
 const api = new API(options);
 ```
 
+## Trace limiter
+## Constructor options
+
+- `options[requestLimit]`: How many request will be able running per **timeLimit**. *Default: 150*
+- `options[timeLimit]`: interval between which a certain number of requests is allowed. *Default: 60000 milliseconds*
+
+#### Example
+```javascript
+import {API} from 'skinsback-sdk';
+
+const options = {
+    shop_id: 1490,
+    secret_key: 'XCvlP45Y2dH2UmHhk',
+    trace: {
+        requestLimit: 50,
+        timeLimit: 60000,
+    }
+}
+
+const api = new API(options);
+```
+
 ## Api methods
 All methods of api return a Promise.
 * [Check the balance on the site](https://skinsback.com/profile.php?act=api&item=balance) 
@@ -79,29 +101,39 @@ api.getMarketPriceList([game])
 ```javascript
 const name = 'FAMAS' // name of skin
 const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
-api.getMarketPriceList(name, [game]) 
+api.findItemsByName(name, [game]);
 ```
 * [MARKET: Buy skin by skin name and send to user](https://skinsback.com/profile.php?act=api&item=market_buy) 
 ```javascript
-const name = 'FAMAS' // name of skin
-const game = 'csgo' // Game types 'dota2' or 'csgo'. Default: 'csgo'
-api.buyItemByNameAndSendToUser(name, [game]) 
+const params = {
+    partner: string, // partner value from user trade URL
+    token: string, //   token value from user trade URL
+    max_price?: number, // max skin cost for buying (as USD). Used as a cost limiter.
+    name: string, // Skin name (market hash name)
+    game: string, // Game types 'dota2' or 'csgo'. Default: 'csgo'
+    custom_id?: number, // ID on your system. Can be used to prevent duplicate purchases.
+}
+api.buyItemByNameAndSendToUser(params);
 ```
 * [MARKET: Buy skin by skin Id and send to user](https://skinsback.com/profile.php?act=api&item=market_buy) 
 ```javascript
 const params = {
     partner: string, // partner value from user trade URL
     token: string, //   token value from user trade URL
-    max_price: number, // max skin cost for buying (as USD). Used as a cost limiter.
-    name: string, // Skin name (market hash name)
-    game: string // Game types 'dota2' or 'csgo'. Default: 'csgo'
+    max_price?: number, // max skin cost for buying (as USD). Used as a cost limiter.
+    id: number, // Item ID from method findItemsByName
+    custom_id?: number, // ID on your system. Can be used to prevent duplicate purchases.
 }
 api.buyItemByIdAndSendToUser(params) 
 ```
 * [MARKET: Get purchase information](https://skinsback.com/profile.php?act=api&item=market_getinfo) 
 ```javascript
 const buy_id = 12354322 /// buy_id from method buyItemByIdAndSendToUser or buyItemByNameAndSendToUser
-api.getInfoAboutBoughtItem(buy_id) 
+const custom_ids = [245221] /// custom_id from market_buy method. If this parameter is specified, 
+/// the response will contain an items array containing information on each purchase.
+
+api.getInfoAboutBoughtItem(buy_id); /// Get info by buy_id
+api.getInfoAboutBoughtItem(custom_ids); // Get info by custom_ids
 ```
 * [MARKET: Purchase history](https://skinsback.com/profile.php?act=api&item=market_history) 
 ```javascript

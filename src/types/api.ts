@@ -1,3 +1,5 @@
+import {TraceLimiterConfig} from "./traceLimiter";
+
 export interface Params {
     [key: string]: any;
 }
@@ -6,6 +8,7 @@ export interface ApiConfig {
     shop_id: number | string,
     secret_key: string,
     apiUrl?: string,
+    trace?: TraceLimiterConfig
 }
 
 export interface Item {
@@ -33,11 +36,12 @@ export enum API_METHODS {
     GET_MARKET_PRICE_LIST='market_pricelist',
     SEARCH_ITEMS='market_search',
     BUY_ITEM_AND_SEND='market_buy',
-    GET_INFO_ABOUT_BOUGHT_ITEM='market_getinfo'
+    GET_INFO_ABOUT_BOUGHT_ITEM='market_getinfo',
+    GET_HISTORY='market_history'
 }
 
 export type GameTypes = 'csgo' | 'dota2'
-export type ResponseStatusType = 'success' | 'error';
+export type ResponseStatusType = 'success';
 export type OrderStatusType = 'pending' | 'fail' | 'success';
 export type ReasonStatusServerType = 'site_off' | 'no_bots';
 export type OfferStatusType =
@@ -55,6 +59,19 @@ export interface Status {
     status: ResponseStatusType
 }
 
+export interface BalanceResponse extends Status {
+    balance: string,
+    balance_in_currencies: {[key: string]: string},
+    deals_sum: string,
+    deals_sum_in_currencies: {[key: string]: string},
+    withdraw_sum: string,
+    withdraw_sum_in_currencies: {[key: string]: string}
+}
+
+export interface Currencies extends Status {
+    items: Array<{ code: string, name: string, rate: string }>
+}
+
 export interface CreateOrderResponse extends Status {
     url: string,
     transaction_id: number,
@@ -68,7 +85,7 @@ export interface OrderModel{
     amount?: string,
     amount_currency?: string,
     amount_in_currencies?: {[key: string]: any},
-    user_amount: string,
+    user_amount?: string,
     user_amount_in_currencies?: {[key: string]: any},
     offer_date?: string,
     skins_send_date?: string,
@@ -79,9 +96,9 @@ export interface OrderStatusResponse extends OrderModel{
     status: OrderStatusType,
 }
 
-export interface OrdersStatusResponse extends OrderModel{
+export interface OrdersStatusResponse {
     status: OrderStatusType,
-    items?: Array<OrderModel>
+    items: Array<OrderModel>
 }
 
 export interface ServerStatusResponse extends Status {
@@ -94,10 +111,11 @@ export interface CallbackErrorListResponse extends Status {
 }
 
 export interface PriceListResponse extends Status {
-    last_update?: string,
-    items?: Array<{
+    last_update: string,
+    items: Array<{
         name: string,
         price: string,
+        classid: string,
         count: string
     }>
 }
