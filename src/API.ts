@@ -66,13 +66,15 @@ class API extends RateLimitter{
                 ...config.data,
                 shopid: apiConfig.shop_id,
             }
+            
             data.sign = SignatureApiBuilder(data, apiConfig.secret_key)
+            
             config.data = data
             // Return modified config with shop_id and signature
             return config;
-        },error => {
+        }, error => {
             // Write response data with error to logs
-            trace && trace.logError(error);
+            trace && trace.writeResponse(error);
             return Promise.reject(error)
         });
 
@@ -83,15 +85,16 @@ class API extends RateLimitter{
             // status fail or error and write Promise value as response body
             if (response.data.status === 'error' || response.data.status === 'fail') {
                 // Write response data with error to logs
-                trace && trace.logResponseError(response);
+                trace && trace.writeResponse(response, true);
                 return Promise.reject(response);
             }
+
             // Write response data with data to logs
-            trace && trace.logResponse(response);
+            trace && trace.writeResponse(response);
             return response.data;
         },error => {
             // Write response data with error to logs
-            trace && trace.logError(error);
+            trace && trace.writeResponse(error, true);
             return Promise.reject(error);
         });
     }
@@ -100,7 +103,7 @@ class API extends RateLimitter{
         try {
             return await this._fetch<BalanceResponse>({method: API_METHODS.BALANCE})
         } catch (e) {
-            throw new Error(e);
+            throw new DefaultError(e);
         }
 
     }
@@ -116,9 +119,9 @@ class API extends RateLimitter{
     public getOrders = async ({
         starting,
         ending
-    }: {starting: number, ending: number}): Promise<OrdersStatusResponse> => {
+    } : {starting: number, ending: number}): Promise<OrdersStatusResponse> => {
         try {
-            return await this._fetch<OrdersStatusResponse>( {starting, ending, method: API_METHODS.GET_ORDERS})
+            return await this._fetch<OrdersStatusResponse>({starting, ending, method: API_METHODS.GET_ORDERS})
         } catch (e) {
             throw new DefaultError(e);
         }
