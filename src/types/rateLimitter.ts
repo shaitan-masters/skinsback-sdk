@@ -1,4 +1,4 @@
-export interface TraceLimiterConfig {
+export interface RateLimitterConfig {
     requestLimit: number
     timeLimit: number
 }

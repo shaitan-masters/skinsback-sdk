@@ -1,4 +1,3 @@
-import fs, {PathLike} from 'fs';
 import {
     ResponseData,
     ResponseLog,
@@ -6,6 +5,8 @@ import {
     ServerErrorLog,
     TraceConfig
 } from "./types";
+
+import fs, {PathLike} from 'fs';
 import path from "path";
 import {checkFileOnValidName, getDate, getLastDateOfDay, getLogFileName} from "./utils";
 import {AxiosResponse} from "axios";

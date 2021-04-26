@@ -1,8 +1,11 @@
+import {
+    RateLimitterConfig
+} from "./types/index";
+
 import Bottleneck from 'bottleneck';
-import {TraceLimiterConfig} from "./types/traceLimiter";
 import {REQUEST_LIMIT, TIME_LIMIT} from "./defaultConfig";
 
-const bottleneckConfigConstructor = (config: TraceLimiterConfig | null) => {
+const bottleneckConfigConstructor = (config: RateLimitterConfig | null) => {
     if (!config) {
         return {
             reservoir: REQUEST_LIMIT,
@@ -22,10 +25,10 @@ const bottleneckConfigConstructor = (config: TraceLimiterConfig | null) => {
     }
 }
 
-class TraceLimiter extends Bottleneck {
-    constructor(config: TraceLimiterConfig | null) {
+class RateLimitter extends Bottleneck {
+    constructor(config: RateLimitterConfig | null) {
         super(bottleneckConfigConstructor(config));
     }
 }
 
-export default TraceLimiter;
+export default RateLimitter;

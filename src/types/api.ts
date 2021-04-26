@@ -1,4 +1,7 @@
-import {TraceLimiterConfig} from "./traceLimiter";
+import { 
+    TraceConfig,
+    RateLimitterConfig
+} from ".";
 
 export interface Params {
     [key: string]: any;
@@ -8,11 +11,8 @@ export interface ApiConfig {
     shop_id: number | string,
     secret_key: string,
     apiUrl?: string,
-    logsPath?: string,
-    enableLogs?: boolean;
-    excludeMethods?: Array<string>,
-    amountOfLastDaysOfSavingLogs?: number;
-    trace?: TraceLimiterConfig
+    trace?: TraceConfig;
+    rate?: RateLimitterConfig
 }
 
 export interface Item {
