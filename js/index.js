@@ -6,16 +6,27 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebSockets = exports.API = void 0;
+exports.HistoryError = exports.OrderInfoError = exports.BuyItemError = exports.MarketSearchError = exports.PriceListError = exports.OrderStatusError = exports.CreateOrderError = exports.DefaultError = exports.WebSockets = exports.API = void 0;
 const API_1 = __importDefault(require("./API"));
 const WebSockets_1 = __importDefault(require("./WebSockets"));
-__exportStar(require("./types"), exports);
+const Errors = __importStar(require("./Errors"));
 exports.API = API_1.default;
 exports.WebSockets = WebSockets_1.default;
+// Errors
+exports.DefaultError = Errors.DefaultError, exports.CreateOrderError = Errors.CreateOrderError, exports.OrderStatusError = Errors.OrderStatusError, exports.PriceListError = Errors.PriceListError, exports.MarketSearchError = Errors.MarketSearchError, exports.BuyItemError = Errors.BuyItemError, exports.OrderInfoError = Errors.OrderInfoError, exports.HistoryError = Errors.HistoryError;
