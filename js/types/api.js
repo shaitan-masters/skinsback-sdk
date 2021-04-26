@@ -14,4 +14,5 @@ var API_METHODS;
     API_METHODS["SEARCH_ITEMS"] = "market_search";
     API_METHODS["BUY_ITEM_AND_SEND"] = "market_buy";
     API_METHODS["GET_INFO_ABOUT_BOUGHT_ITEM"] = "market_getinfo";
+    API_METHODS["GET_HISTORY"] = "market_history";
 })(API_METHODS = exports.API_METHODS || (exports.API_METHODS = {}));
