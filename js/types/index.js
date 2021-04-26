@@ -13,3 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./api"), exports);
 __exportStar(require("./ws"), exports);
 __exportStar(require("./trace"), exports);
+__exportStar(require("./rateLimitter"), exports);

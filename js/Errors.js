@@ -16,6 +16,7 @@ var DefaultErrorsEnum;
     DefaultErrorsEnum["shop_not_active"] = "shop_not_active";
     DefaultErrorsEnum["invalid_method"] = "invalid_method";
     DefaultErrorsEnum["request_limit_reached"] = "request_limit_reached";
+    DefaultErrorsEnum["request_timeout"] = "request_timeout";
 })(DefaultErrorsEnum = exports.DefaultErrorsEnum || (exports.DefaultErrorsEnum = {}));
 // CreateOrderErrors
 var CreateOrderErrorsEnum;
@@ -80,9 +81,10 @@ const ErrorList = (enumProp) => {
 };
 class DefaultError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -91,9 +93,10 @@ __decorate([
 exports.DefaultError = DefaultError;
 class CreateOrderError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -102,9 +105,10 @@ __decorate([
 exports.CreateOrderError = CreateOrderError;
 class OrderStatusError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -113,9 +117,10 @@ __decorate([
 exports.OrderStatusError = OrderStatusError;
 class PriceListError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -124,9 +129,10 @@ __decorate([
 exports.PriceListError = PriceListError;
 class MarketSearchError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -135,9 +141,10 @@ __decorate([
 exports.MarketSearchError = MarketSearchError;
 class BuyItemError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -146,9 +153,10 @@ __decorate([
 exports.BuyItemError = BuyItemError;
 class OrderInfoError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([
@@ -157,9 +165,10 @@ __decorate([
 exports.OrderInfoError = OrderInfoError;
 class HistoryError {
     constructor(data) {
+        var _a, _b;
         this.status = 'error';
-        this.error_code = data.error_code;
-        this.error_message = data.error_message;
+        this.error_code = ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.error_code) || -999;
+        this.error_message = ((_b = data === null || data === void 0 ? void 0 : data.data) === null || _b === void 0 ? void 0 : _b.error_message) || 'request_timeout';
     }
 }
 __decorate([

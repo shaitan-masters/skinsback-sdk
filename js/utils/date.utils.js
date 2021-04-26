@@ -1,32 +1,18 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkFileOnValidName = exports.getLastDateOfDay = exports.getDate = exports.getLogFileName = void 0;
-const promises_1 = __importDefault(require("fs/promises"));
-const path_1 = __importDefault(require("path"));
+exports.checkFileOnValidName = exports.getLastDateOfDay = exports.getDate = exports.getDateString = void 0;
 const fileNameRegExp = /^([0][1-9]|[1-2][0-9]|[3][0-1])_([0][1-9]|[1-2][0-9]|[3][0-1])_[0-9][0-9][0-9][0-9]\.(json)/g;
-const getLogFileName = async (pathToFile) => {
+const getDateString = () => {
     const currentDate = new Date();
-    const date = currentDate.getDate() <= 9 ? '0' + currentDate.getDate() : currentDate.getDate();
-    const month = currentDate.getMonth() + 1 <= 9 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1);
-    const year = currentDate.getFullYear();
-    const fileName = `${month}_${date}_${year}.json`;
-    const filePath = path_1.default.resolve(pathToFile, fileName);
-    try {
-        const data = await promises_1.default.readFile(filePath);
-        if (!data.length) {
-            await promises_1.default.writeFile(filePath, JSON.stringify([]));
-        }
-        return filePath;
-    }
-    catch (e) {
-        await promises_1.default.writeFile(filePath, JSON.stringify([]));
-        return filePath;
-    }
+    const dateNumber = currentDate.getDate();
+    const monthNumber = currentDate.getMonth() + 1;
+    const yearNumber = currentDate.getFullYear();
+    const date = dateNumber <= 9 ? `0${dateNumber}` : dateNumber.toString();
+    const month = currentDate.getMonth() ? `0${monthNumber}` : monthNumber.toString();
+    const year = yearNumber;
+    return `${month}_${date}_${year}`;
 };
-exports.getLogFileName = getLogFileName;
+exports.getDateString = getDateString;
 const getDate = (fileName) => {
     const [month, day, year] = fileName.replace('.json', '').split('_');
     const date = new Date(`${month}/${day}/${year}`);

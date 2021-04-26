@@ -3,26 +3,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = __importDefault(require("axios"));
-const SignatureGenerator_1 = require("./SignatureGenerator");
-const defaultConfig_1 = require("./defaultConfig");
 const types_1 = require("./types");
-<<<<<<< HEAD
 const Errors_1 = require("./Errors");
-const TraceLimiter_1 = __importDefault(require("./TraceLimiter"));
-class API extends TraceLimiter_1.default {
-=======
+const defaultConfig_1 = require("./defaultConfig");
+const axios_1 = __importDefault(require("axios"));
 const Trace_1 = __importDefault(require("./Trace"));
-class API {
->>>>>>> SC-2008-Add_tracing_for_skinsback
+const RateLimitter_1 = __importDefault(require("./RateLimitter"));
+const SignatureGenerator_1 = require("./SignatureGenerator");
+class API extends RateLimitter_1.default {
     constructor(apiConfig) {
-        super(apiConfig.trace || null);
+        super(apiConfig.rate || null);
         this.getBalance = async () => {
             try {
                 return await this._fetch({ method: types_1.API_METHODS.BALANCE });
             }
             catch (e) {
-                throw new Error(e);
+                throw new Errors_1.DefaultError(e);
             }
         };
         this.getCurrencies = async () => {
@@ -142,14 +138,7 @@ class API {
         this.axios = axios_1.default.create({
             baseURL: this.config.apiUrl || defaultConfig_1.API_URL,
         });
-        this.trace = null;
-        if (this.config.enableLogs) {
-            this.trace = new Trace_1.default({
-                logsPath: this.config.logsPath,
-                excludeMethods: this.config.excludeMethods,
-                amountOfLastDaysOfSavingLogs: this.config.amountOfLastDaysOfSavingLogs
-            });
-        }
+        this.trace = this.config.trace ? new Trace_1.default(this.config.trace) : null;
         API.interceptorsInit.call(this, this.config, this.trace);
     }
     static interceptorsInit(apiConfig, trace) {
@@ -164,15 +153,11 @@ class API {
             config.data = data;
             // Return modified config with shop_id and signature
             return config;
-<<<<<<< HEAD
-        }, error => Promise.reject(new Error(error)));
-=======
         }, error => {
             // Write response data with error to logs
-            trace && trace.logError(error);
+            trace && trace.writeResponse(error);
             return Promise.reject(error);
         });
->>>>>>> SC-2008-Add_tracing_for_skinsback
         // Response interceptor
         this.axios.interceptors.response.use((response) => {
             // When received error, response has status 200? but it has status field in response body with error
@@ -180,20 +165,16 @@ class API {
             // status fail or error and write Promise value as response body
             if (response.data.status === 'error' || response.data.status === 'fail') {
                 // Write response data with error to logs
-                trace && trace.logResponseError(response);
+                trace && trace.writeResponse(response, true);
                 return Promise.reject(response);
             }
             // Write response data with data to logs
-            trace && trace.logResponse(response);
+            trace && trace.writeResponse(response);
             return response.data;
         }, error => {
-<<<<<<< HEAD
-            return Promise.reject(new Error(error));
-=======
             // Write response data with error to logs
-            trace && trace.logError(error);
+            trace && trace.writeResponse(error, true);
             return Promise.reject(error);
->>>>>>> SC-2008-Add_tracing_for_skinsback
         });
     }
     _fetch(data) {
