@@ -19,17 +19,21 @@ import {API} from 'skinsback-sdk';
 
 #### Example
 ```javascript
-import {API} from 'skinsback-sdk';
+const { API } = require('./../js');
 
 const options = {
-    shop_id: 1490,
-    secret_key: 'XCvlP45Y2dH2UmHhk'
-}
+  secret_key: '', // Insert your secret-key from panel
+  shop_id: 0 // Insert your shop-id from panel
+};
 
 const api = new API(options);
+
+api.getBalance()
+  .then(v => console.log('Response', v))
+  .catch(v => console.log('Error', v));
 ```
 
-## Trace limiter
+## Rate limiter
 ## Constructor options
 
 - `options[requestLimit]`: How many request will be able running per **timeLimit**. *Default: 150*
@@ -37,18 +41,22 @@ const api = new API(options);
 
 #### Example
 ```javascript
-import {API} from 'skinsback-sdk';
+const { API } = require('./../js');
 
 const options = {
-    shop_id: 1490,
-    secret_key: 'XCvlP45Y2dH2UmHhk',
-    trace: {
-        requestLimit: 50,
-        timeLimit: 60000,
-    }
-}
+  secret_key: '', // Insert your secret-key from panel
+  shop_id: 0, // Insert your shop-id from panel
+  rate: {
+    requestLimit: 50,
+    timeLimit: 60000
+  }
+};
 
 const api = new API(options);
+
+api.getBalance()
+  .then(v => console.log('Response', v))
+  .catch(v => console.log('Error', v));
 ```
 
 ## Api methods
@@ -194,33 +202,30 @@ Logged request to json files. All logs saved as file with name in format as date
 All logs saving to path specified in the description `options[logsPath]`
 <br>
 Example: **11_06_2020.json**
-## Usage
-```javascript
-const API = require('skinsback-sdk').API;
-```
-or
-```javascript
-import {API} from 'skinsback-sdk';
-````
-## Constructor options
+
+## Rate field options
 
 - `options[logsPath]`: path to save files with logs.
-- `options[enableLogs]`: Need to create logs. Default: **false**.
 - `options[excludeMethods]`: List with methods that not used in trace. Default empty array.
 - `options[amountOfLastDaysOfSavingLogs]`: Amount of last days for saving logs.
 
 #### Example
 ```javascript
-import {API} from 'skinsback-sdk';
+const { API } = require('./../js');
 
 const options = {
-    shop_id: 1490,
-    secret_key: 'XCvlP45Y2dH2UmHhk',
-    logsPath: 'logs/skinsback-api',
-    enableLogs: true,
-    excludeMethods: ['market_pricelist', 'market_search'],
-    amountOfLastDaysOfSavingLogs: 7
-}
+  secret_key: '', // Insert your secret-key from panel
+  shop_id: 0, // Insert your shop-id from panel
+  trace: {
+    excludeMethods: [ 'balance' ],
+    logsPath: './logs/skinsback-api',
+    saveDaysAmount: 7
+  }
+};
 
 const api = new API(options);
+
+api.getBalance()
+  .then(v => console.log('Response', v))
+  .catch(v => console.log('Error', v));
 ```
