@@ -14,6 +14,7 @@ export enum DefaultErrorsEnum {
     shop_not_active='shop_not_active',
     invalid_method='invalid_method',
     request_limit_reached='request_limit_reached',
+    request_timeout='request_timeout'
 }
 
 type DefaultErrorType = keyof typeof DefaultErrorsEnum
@@ -95,25 +96,29 @@ const ErrorList = (enumProp: any) => {
 
 export class DefaultError implements ErrorModel<DefaultErrorType>{
     @ErrorList(DefaultErrorsEnum)
+
     public status: ErrorStatus;
     public error_code: number;
     public error_message: DefaultErrorType;
+
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 
 export class CreateOrderError implements ErrorModel<CreateOrderErrorsType>{
     @ErrorList(CreateOrderErrorsEnum)
+
     public status: ErrorStatus;
     public error_code: number;
     public error_message: CreateOrderErrorsType;
+
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 
@@ -124,8 +129,8 @@ export class OrderStatusError implements ErrorModel<OrderStatusErrorsType>{
     public error_message: OrderStatusErrorsType;
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 
@@ -136,8 +141,8 @@ export class PriceListError implements ErrorModel<PriceListErrorsType>{
     public error_message: PriceListErrorsType;
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 
@@ -148,8 +153,8 @@ export class MarketSearchError implements ErrorModel<FindItemsType>{
     public error_message: FindItemsType;
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 
@@ -160,8 +165,8 @@ export class BuyItemError implements ErrorModel<BuyItemType>{
     public error_message: BuyItemType;
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 
@@ -172,8 +177,8 @@ export class OrderInfoError implements ErrorModel<GetOrderInfoType>{
     public error_message: GetOrderInfoType;
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
 export class HistoryError implements ErrorModel<HistoryType>{
@@ -183,7 +188,7 @@ export class HistoryError implements ErrorModel<HistoryType>{
     public error_message: HistoryType;
     constructor(data: any) {
         this.status = 'error';
-        this.error_code = data.error_code
-        this.error_message = data.error_message;
+        this.error_code = data?.data?.error_code || -999
+        this.error_message = data?.data?.error_message || 'request_timeout';
     }
 }
