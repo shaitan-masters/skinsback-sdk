@@ -4,7 +4,7 @@ import {AxiosResponse} from "axios";
 export interface TraceConfig {
     logsPath?: string;
     excludeMethods?: string[],
-    amountOfLastDaysOfSavingLogs?: number
+    saveDaysAmount?: number
 }
 
 export type LogStatus = 'Response_Error' | 'Success';
@@ -42,6 +42,7 @@ export class ResponseLog implements ResponseData {
     method: API_METHODS;
     requestData: Params;
     responseData: any;
+
     constructor(response: AxiosResponse) {
         this.status = ResponseLog.getStatus(response);
         this.responseTime = new Date().toISOString();

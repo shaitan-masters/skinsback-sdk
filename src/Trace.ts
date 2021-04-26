@@ -1,92 +1,135 @@
 import {
-    ResponseData,
-    ResponseLog,
-    ServerErrorData,
-    ServerErrorLog,
     TraceConfig
 } from "./types";
 
-import fs, {PathLike} from 'fs';
+import fs, { WriteStream } from 'fs';
 import path from "path";
-import {checkFileOnValidName, getDate, getLastDateOfDay, getLogFileName} from "./utils";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
+import { getDateString } from "./utils";
 
 export default class Trace {
     private readonly logsPath: string;
-    private config: TraceConfig;
+    private readonly saveDaysAmount: number;
     private readonly excludeMethods: Array<string>;
-    private amountOfLastDaysOfSavingLogs: number;
-    constructor(config: TraceConfig) {
-        this.config = config;
-        this.logsPath = this.generateLogsPath(this.config.logsPath || '.');
-        this.excludeMethods = [];
-        this.amountOfLastDaysOfSavingLogs = 7;
 
-        if (
-            typeof this.config.amountOfLastDaysOfSavingLogs === 'number' &&
-            this.config.amountOfLastDaysOfSavingLogs > 0
-        ) {
-            this.amountOfLastDaysOfSavingLogs = this.config.amountOfLastDaysOfSavingLogs;
-        }
+    private lastLogName : string;
+    private _writeStream : WriteStream | null;
 
-        if (this.config.excludeMethods instanceof Array) {
-            this.excludeMethods = this.config.excludeMethods;
-        }
-        this.deleteLogs();
+    constructor(config: TraceConfig = {}) {        
+        this.excludeMethods = config.excludeMethods && Array.isArray(config.excludeMethods) ? config.excludeMethods : [];
+        this.saveDaysAmount = config.saveDaysAmount && !isNaN(+config.saveDaysAmount) ? +config.saveDaysAmount : 7;
+        this.logsPath = config.logsPath || '/logs';
+        
+        this.lastLogName = this.todayLogName;
+
+        this._writeStream = null;
+
+        // Start clean-up each hour
+        setInterval(() => this.deleteLogs(), 60 * 60 * 1000);
     }
 
-    private generateLogsPath = (pathToLogs: string): string => {
-        if (!pathToLogs) {
-            throw new Error('Config logsPath is not correct');
+    /**
+     * Getter for writeStream, which can create it, if it not exists
+     */
+    get writeStream() : WriteStream {
+        // If todayLogName was swiched cause of time, re-create stream
+        if (this.lastLogName != this.todayLogName) {
+            return this.prepareStream();
         }
-        // Check if directory is not exists, create directory
-        if (!fs.existsSync(pathToLogs)){
-            fs.mkdirSync(pathToLogs, { recursive: true });
+
+        // If no write-stream, or stream is not writable, re-create stream too
+        if (!this._writeStream || !this._writeStream.writable) {
+            return this.prepareStream();
         }
-        return path.resolve(pathToLogs);
+
+        return this._writeStream;
     }
 
-    public logResponse = (response: AxiosResponse): void => {
-        // Not logged response that includes excluded methods
-        const {method} = JSON.parse(response.config.data);
-        if (this.excludeMethods.includes(method)) {
+    get todayLogName() : string {
+        return getDateString();
+    }
+
+    /**
+     * Create write-stream to actual log file
+     */
+    private prepareStream() : WriteStream {
+        const path = `${this.logsPath}/${this.todayLogName}.txt`;
+
+        this.prepareLogsFolder();
+
+        if (!fs.existsSync(path)) {
+            fs.writeFileSync(path, '');
+        }
+
+        if (this._writeStream) {
+            this._writeStream.end();
+        }
+
+        this.lastLogName = this.todayLogName;
+
+        this._writeStream = fs.createWriteStream(path, {
+            flags: 'a'
+        });
+
+        return this._writeStream;
+    }
+
+    /**
+     * Simple create logs folder
+     */
+    private prepareLogsFolder() {
+        try {
+            fs.mkdirSync(this.logsPath, { recursive: true });
+        }
+        catch {
+            
+        }
+    }
+
+    /**
+     * Write response to logs
+     */
+    public writeResponse(response: AxiosResponse, error: boolean = false) {
+        const { method, baseURL } = response.config;
+        
+        // Review: i am not sure, is it good idea to parse each response.config to find exclude methods
+        // Maybe prevent logging in axios interceptors?
+        const { method: apiMethod } = JSON.parse(response.config.data);
+        if (this.excludeMethods.includes(apiMethod)) {
             return;
         }
-        const data: ResponseData = new ResponseLog(response)
-        this.writeLogs(data)
+
+        const logTxt = 
+            `\n${error ? 'ERRORED ' : ''}<${new Date().toLocaleString()}> ${method} ${baseURL}` +
+            `\n>>> ${response.config.data}` +
+            `\n<<< ${JSON.stringify(response.data || { error: "timeout" })}`;
+
+        this.write(logTxt);
     }
 
-    public logResponseError = (response: AxiosResponse): void => {
-        const data: ResponseData = new ResponseLog(response);
-        this.writeLogs(data)
+    /**
+     * Write to stream
+     */
+    private write(txt: string) {
+        this.writeStream.write(txt);
     }
 
-    public logError = (error: Error): void => {
-        const data: ServerErrorData = new ServerErrorLog(error);
-        this.writeLogs(data)
-    }
+    private deleteLogs() {
+        const now = Date.now();
+        const files = fs.readdirSync(this.logsPath);
 
-    private writeLogs = async (currentRequest: any): Promise<void> => {
-        const fsPromises = fs.promises;
-        const filePath: PathLike = await getLogFileName(this.logsPath);
-        const data: Array<{[key: string]: any}> = JSON.parse(
-            await fsPromises.readFile(filePath, {encoding: "utf8"})
-        );
-        data.push(currentRequest);
-        await fsPromises.writeFile(filePath, JSON.stringify(data));
-    }
+        files.forEach(async (file) => {
+            const filePath = `${this.logsPath}/${file}`;
 
-    private deleteLogs = async () => {
-        const currentDay = getLastDateOfDay(this.amountOfLastDaysOfSavingLogs);
-        const files = await fs.promises.readdir(this.logsPath)
-        for (let file of files) {
-            if (!checkFileOnValidName(file)) {
-                continue;
-            }
-            if (currentDay > getDate(file)) {
-               await fs.promises.unlink(path.resolve(this.logsPath, file));
-            }
-        }
-    }
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    return; 
+                }
 
+                if (now - stats.ctimeMs > this.saveDaysAmount * 24 * 60 * 60 * 1000) {
+                    fs.rmSync(filePath);
+                }
+            });
+        });
+    }
 }
