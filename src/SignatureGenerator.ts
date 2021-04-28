@@ -6,7 +6,7 @@ export const SignatureApiBuilder = (params: Params, secret_key: string) => {
     let	paramsString: string = Object.entries(params)
         .sort()
         .reduce((paramsAsString, [key, value]) => {
-            if (key === 'sign' || typeof key == 'object') return paramsAsString;
+            if (key === 'sign' || typeof value == 'object') return paramsAsString;
             return paramsAsString + key + ':' + value + ';';
         }, '')
 
