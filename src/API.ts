@@ -23,6 +23,7 @@ class API {
         this.config = apiConfig;
         this.axios = axios.create({
             baseURL: this.config.apiUrl || API_URL,
+            timeout: 5 * 1000
         })
         API.interceptorsInit.call(this, this.config);
     }
