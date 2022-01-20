@@ -1,12 +1,12 @@
 {
   "name": "skinsback-sdk",
-  "version": "0.2.9",
+  "version": "0.2.12",
   "description": "SDK for integrations with skinsback.com",
   "main": "index.js",
   "types": "js/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "publish": "npm run build & npm publish",
+    "prepublishOnly": "npm run build",
     "dev": "nodemon --exec ts-node -- ./src/index.ts"
   },
   "repository": {
